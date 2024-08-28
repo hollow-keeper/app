@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  back:
+    build: ../hollow-keeper
+    container_name: hollow_back_c
+    ports:
+      - '3000:3000'
+    environment:
+      - .env.docker
+    volumes:
+      - .:/back
+      - /back/node_modules
+    stdin_open: true
+    tty: true
+  db:
+    restart: always
+    image: postgres:15.2
+    container_name: hollow_db_c
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=hollow_db
+    volumes:
+      - /pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  pg_admin:
+    restart: always
+    image: dpage/pgadmin4
+    container_name: hollow_pg_admin_c
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@mail.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - 5050:80
+    volumes:
+      - /pgadmin:/var/lib/pgadmin
