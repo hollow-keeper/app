@@ -24,7 +24,7 @@ export class CharacterService {
   findOne(id: number) {
     return this.repository.find({
       where: { id },
-      relations: { description: true, characteristics: true },
+      relations: { description: true, characteristics: true, equipment: true },
     });
   }
 

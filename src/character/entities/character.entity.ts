@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Description } from './description.entity';
 import { Characteristics } from './characteristics.entity';
+import { Equipment } from './equipment.entity';
 
 @Entity({ name: 'characters' })
 export class Character {
@@ -27,6 +28,10 @@ export class Character {
   })
   characteristics: Characteristics;
 
-  @Column()
-  equipment: string;
+  @OneToOne(() => Equipment, { cascade: true })
+  @JoinColumn({
+    name: 'equipment_id',
+    referencedColumnName: 'id',
+  })
+  equipment: Equipment;
 }
