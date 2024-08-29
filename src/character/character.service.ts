@@ -22,7 +22,10 @@ export class CharacterService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} character`;
+    return this.repository.find({
+      where: { id },
+      relations: { description: true, characteristics: true },
+    });
   }
 
   update(id: number, updateCharacterDto: UpdateCharacterDto) {
