@@ -13,4 +13,7 @@ export class Character {
 
   @Column()
   equipment: string;
+
+  @Column()
+  qwepment: string;
 }

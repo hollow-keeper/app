@@ -10,6 +10,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
   ],
+  exclude: ['src/migrations/*.ts']
   root: true,
   env: {
     node: true,

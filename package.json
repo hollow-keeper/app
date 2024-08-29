@@ -19,9 +19,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "typeorm-ts-node-commonjs -d src/datasource.ts",
     "migrate": "yarn typeorm migration:run",
-    "migrate:generate": "bash ./generate-migration.sh",
-    "migrate:create": "yarn typeorm migration:create",
-    "migrate:revert": "yarn typeorm migration:revert"
+    "migration:generate": "bash ./generate-migration.sh",
+    "migration:create": "yarn typeorm migration:create",
+    "migration:revert": "yarn typeorm migration:revert"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
