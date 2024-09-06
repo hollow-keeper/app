@@ -34,22 +34,37 @@ export class CharacterService {
       relations: { equipment: true, characteristics: true },
     });
 
-    const { souls } = character.equipment;
+    if (!character) {
+      throw new NotFoundException(`Character with ID ${id} not found`);
+    }
 
-    let soulsNeeded = 0;
-    let levels = 0;
-
-    if (!character || !character.equipment || !character.characteristics) {
+    if (
+      !character.equipment ||
+      !character.characteristics ||
+      !character.characteristics.level
+    ) {
       throw new NotFoundException(
-        `Character with ID ${id} not found or has incomplete data`,
+        `Character with ID ${id} has incomplete data`,
       );
     }
 
-    while (soulsNeeded < souls) {
+    const { souls } = character.equipment;
+
+    let soulsLeft = souls;
+    let levels = 0;
+
+    const levelsArr = [637, 690, 707, 724, 741, 758, 775, 793, 811, 829];
+
+    while (soulsLeft > 0) {
       let level = character.characteristics.level + levels;
       levels++;
 
-      soulsNeeded -= Math.floor(
+      if (level < 11) {
+        soulsLeft -= levelsArr[level - 1];
+        continue;
+      }
+
+      soulsLeft -= Math.floor(
         0.02 * Math.pow(level, 3) +
           3.06 * Math.pow(level, 2) +
           105.6 * level -
