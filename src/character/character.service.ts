@@ -9,6 +9,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Character } from './entities/character.entity';
 import { Repository } from 'typeorm';
 import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
+import { UpdateEquipmentDto } from './dto/update-equipment.dto';
+import { Hand } from './types';
 
 const calculateSoulsForLevel = (level: number) => {
   const levelsArr = [0, 637, 690, 707, 724, 741, 758, 775, 793, 811, 829];
@@ -200,9 +202,29 @@ export class CharacterService {
 
     character.equipment.souls -= soulsToSubtract;
 
-    // return character;
     return this.repository.save(character);
   }
+
+  async equip(id: number, newEquipment: UpdateEquipmentDto) {
+    const character = await this.repository.findOne({
+      where: { id },
+      relations: { equipment: true },
+    });
+
+    if (!character) {
+      throw new NotFoundException(`Character with ID ${id} not found`);
+    }
+
+    if (!character.equipment) {
+      throw new NotFoundException(`Character with ID ${id} has no equipment`);
+    }
+
+    character.equipment = { ...character.equipment, ...newEquipment };
+
+    return this.repository.save(character);
+  }
+
+  switchHand(id: number, hand: Hand) {}
 
   update(id: number, updateCharacterDto: UpdateCharacterDto) {
     return `This action updates a #${id} character`;
