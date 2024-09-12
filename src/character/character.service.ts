@@ -120,6 +120,25 @@ export class CharacterService {
     return this.repository.save(character);
   }
 
+  async updateHumanity(id: number, humanity: number) {
+    const character = await this.repository.findOne({
+      where: { id },
+      relations: { equipment: true },
+    });
+
+    if (!character) {
+      throw new NotFoundException(`Character with ID ${id} not found`);
+    }
+
+    if (!character.equipment) {
+      throw new NotFoundException(`Character with ID ${id} has no equipment`);
+    }
+
+    character.equipment.humanity += humanity;
+
+    return this.repository.save(character);
+  }
+
   async levelup(id: number, newCharacteristics: UpdateCharacteristicsDto) {
     const character = await this.repository.findOne({
       where: { id },

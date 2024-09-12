@@ -12,6 +12,7 @@ import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { UpdateSoulsDto } from './dto/update-souls.dto';
 import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
+import { UpdateHumanityDto } from './dto/update-humanity.dto';
 
 @Controller('characters')
 export class CharacterController {
@@ -40,6 +41,17 @@ export class CharacterController {
   @Patch(':id/souls')
   updateSouls(@Param('id') id: string, @Body() updateSoulsDto: UpdateSoulsDto) {
     return this.characterService.updateSouls(+id, updateSoulsDto.souls);
+  }
+
+  @Patch(':id/humanity')
+  updateHumanity(
+    @Param('id') id: string,
+    @Body() updateHumanityDto: UpdateHumanityDto,
+  ) {
+    return this.characterService.updateHumanity(
+      +id,
+      updateHumanityDto.humanity,
+    );
   }
 
   @Patch(':id')

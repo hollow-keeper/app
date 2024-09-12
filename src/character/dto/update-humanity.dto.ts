@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber } from 'class-validator';
 
-export class UpdateSoulsDto {
+export class UpdateHumanityDto {
   @ApiProperty()
   @IsNumber()
-  souls: number = 0;
+  humanity: number = 0;
 }
