@@ -83,14 +83,19 @@ export class CharacterService {
 
     const { souls } = character.equipment;
 
-    let soulsToSubtract = 0;
+    let soulsLeft = souls;
     let levels = 0;
+    let soulsNeeded = calculateSoulsForLevel(
+      character.characteristics.level + levels,
+    );
 
-    while (souls > soulsToSubtract) {
-      let level = character.characteristics.level + levels;
+    while (soulsLeft > soulsNeeded) {
+      soulsLeft -= soulsNeeded;
+
       levels++;
-      // thought of exporting this number
-      soulsToSubtract += calculateSoulsForLevel(level);
+      soulsNeeded = calculateSoulsForLevel(
+        character.characteristics.level + levels,
+      );
     }
 
     return levels;
@@ -110,7 +115,7 @@ export class CharacterService {
       throw new NotFoundException(`Character with ID ${id} has no equipment`);
     }
 
-    character.equipment.souls = souls;
+    character.equipment.souls += souls;
 
     return this.repository.save(character);
   }
