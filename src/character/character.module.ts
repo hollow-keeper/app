@@ -7,10 +7,7 @@ import { Repository } from 'typeorm';
 
 @Module({
   controllers: [CharacterController],
-  providers: [
-    CharacterService,
-    { provide: getRepositoryToken(Character), useClass: Repository<Character> },
-  ],
-  imports: [TypeOrmModule.forFeature([Character]), Repository<Character>],
+  providers: [CharacterService],
+  imports: [TypeOrmModule.forFeature([Character])],
 })
 export class CharacterModule {}

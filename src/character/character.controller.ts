@@ -11,6 +11,7 @@ import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { UpdateSoulsDto } from './dto/update-souls.dto';
+import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
 
 @Controller('characters')
 export class CharacterController {
@@ -47,6 +48,14 @@ export class CharacterController {
     @Body() updateCharacterDto: UpdateCharacterDto,
   ) {
     return this.characterService.update(+id, updateCharacterDto);
+  }
+
+  @Patch(':id/up')
+  levelup(
+    @Param('id') id: string,
+    @Body() characteristicsDto: UpdateCharacteristicsDto,
+  ) {
+    return this.characterService.levelup(+id, characteristicsDto);
   }
 
   @Delete(':id')

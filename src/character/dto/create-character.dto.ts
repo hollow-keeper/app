@@ -6,6 +6,7 @@ import {
   MinLength,
   MaxLength,
 } from 'class-validator';
+import { CharacteristicsDto } from './characteristics.dto';
 
 class DescriptionDto {
   @ApiProperty()
@@ -19,52 +20,6 @@ class DescriptionDto {
   @ApiProperty()
   @IsString()
   game_class: string;
-}
-
-class CharacteristicsDto {
-  @ApiProperty()
-  @IsNumber()
-  level: number;
-
-  @ApiProperty()
-  @IsNumber()
-  vitality: number;
-
-  @ApiProperty()
-  @IsNumber()
-  attunement: number;
-
-  @ApiProperty()
-  @IsNumber()
-  endurance: number;
-
-  @ApiProperty()
-  @IsNumber()
-  strength: number;
-
-  @ApiProperty()
-  @IsNumber()
-  dexterity: number;
-
-  @ApiProperty()
-  @IsNumber()
-  resistance: number;
-
-  @ApiProperty()
-  @IsNumber()
-  intelligence: number;
-
-  @ApiProperty()
-  @IsNumber()
-  faith: number;
-
-  @ApiProperty()
-  @IsNumber()
-  perception: number;
-
-  @ApiProperty()
-  @IsNumber()
-  charisma: number;
 }
 
 class EquipmentDto {
