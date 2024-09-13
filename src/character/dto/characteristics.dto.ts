@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber } from 'class-validator';
 
-//TODO: should it smth more like CreacteCh..csDto?
 export class CharacteristicsDto {
   @ApiProperty()
   @IsNumber()

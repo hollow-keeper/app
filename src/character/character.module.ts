@@ -6,8 +6,8 @@ import { Character } from './entities/character.entity';
 import { Repository } from 'typeorm';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([Character])],
   controllers: [CharacterController],
   providers: [CharacterService],
-  imports: [TypeOrmModule.forFeature([Character])],
 })
 export class CharacterModule {}
