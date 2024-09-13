@@ -2,15 +2,15 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  Logger,
 } from '@nestjs/common';
 import { CreateCharacterDto } from './dto/create-character.dto';
-import { UpdateCharacterDto } from './dto/update-character.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Character } from './entities/character.entity';
 import { Repository } from 'typeorm';
 import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
 import { UpdateEquipmentDto } from './dto/update-equipment.dto';
-import { Hand } from './types';
+import { GameClass, gameClasses, Hand } from './character.consts';
 
 const calculateSoulsForLevel = (level: number) => {
   const levelsArr = [0, 637, 690, 707, 724, 741, 758, 775, 793, 811, 829];
@@ -24,33 +24,49 @@ const calculateSoulsForLevel = (level: number) => {
   );
 };
 
+const calcTotalCharacteristics = (characteristics: UpdateCharacteristicsDto) =>
+  Object.values(characteristics).reduce((acc, val) => (acc += val));
+
 @Injectable()
 export class CharacterService {
+  logger = new Logger(CharacterService.name);
+
   constructor(
     @InjectRepository(Character)
     private repository: Repository<Character>,
   ) {}
 
-  create(createCharacterDto: CreateCharacterDto) {
-    const char = this.repository.create(createCharacterDto);
+  create(
+    gameClass: GameClass,
+    { name, origin, equipment }: CreateCharacterDto,
+  ) {
+    const char = this.repository.create({
+      description: {
+        name,
+        origin,
+        game_class: gameClass,
+      },
+      characteristics: gameClasses[gameClass],
+      equipment,
+    });
     return this.repository.save(char);
   }
 
   async findAll() {
+    this.logger.log('findAll has been invoked');
+
     const characters = await this.repository.find({
       relations: { description: true },
     });
 
-    if (characters.length === 0) {
-      throw new NotFoundException('No characters found');
-    }
-    return characters;
+    return characters.map((ch) => ({ ...ch.description, id: ch.id }));
   }
 
   async findOne(id: number) {
     if (!this.repository) {
       throw new Error('Repository is not initialized');
     }
+
     const character = await this.repository.findOne({
       where: { id },
       relations: { description: true, characteristics: true, equipment: true },
@@ -64,14 +80,7 @@ export class CharacterService {
   }
 
   async getAvailableLevels(id: number) {
-    const character = await this.repository.findOne({
-      where: { id },
-      relations: { equipment: true, characteristics: true },
-    });
-
-    if (!character) {
-      throw new NotFoundException(`Character with ID ${id} not found`);
-    }
+    const character = await this.findOne(id);
 
     if (
       !character.equipment ||
@@ -104,18 +113,7 @@ export class CharacterService {
   }
 
   async updateSouls(id: number, souls: number) {
-    const character = await this.repository.findOne({
-      where: { id },
-      relations: { equipment: true },
-    });
-
-    if (!character) {
-      throw new NotFoundException(`Character with ID ${id} not found`);
-    }
-
-    if (!character.equipment) {
-      throw new NotFoundException(`Character with ID ${id} has no equipment`);
-    }
+    const character = await this.findOne(id);
 
     character.equipment.souls += souls;
 
@@ -123,18 +121,7 @@ export class CharacterService {
   }
 
   async updateHumanity(id: number, humanity: number) {
-    const character = await this.repository.findOne({
-      where: { id },
-      relations: { equipment: true },
-    });
-
-    if (!character) {
-      throw new NotFoundException(`Character with ID ${id} not found`);
-    }
-
-    if (!character.equipment) {
-      throw new NotFoundException(`Character with ID ${id} has no equipment`);
-    }
+    const character = await this.findOne(id);
 
     character.equipment.humanity += humanity;
 
@@ -142,30 +129,14 @@ export class CharacterService {
   }
 
   async levelup(id: number, newCharacteristics: UpdateCharacteristicsDto) {
-    const character = await this.repository.findOne({
-      where: { id },
-      relations: { characteristics: true, equipment: true },
-    });
+    const character = await this.findOne(id);
 
-    if (!character) {
-      throw new NotFoundException(`Character with ID ${id} not found`);
-    }
-
-    if (!character.equipment) {
-      throw new NotFoundException(`Character with ID ${id} has no equipment`);
-    }
-
-    //TODO: think of removing id more generally
     const {
       id: _,
       level,
       ...characteristicsExceptLevel
     } = character.characteristics;
     let { souls } = character.equipment;
-
-    const calcTotalCharacteristics = (
-      characteristics: UpdateCharacteristicsDto,
-    ) => Object.values(characteristics).reduce((acc, val) => (acc += val));
 
     const nextSkillPoints = calcTotalCharacteristics(newCharacteristics);
 
@@ -175,14 +146,13 @@ export class CharacterService {
 
     let soulsToSubtract = 0;
 
-    // const levelsArr = [0, 637, 690, 707, 724, 741, 758, 775, 793, 811, 829];
     for (let i = 0; i < nextSkillPoints - prevSkillPoints; i++) {
       const currentLevel = level + i;
       soulsToSubtract += calculateSoulsForLevel(currentLevel);
     }
 
-    //TODO: could be a problem if somehow we can achieve situation
-    // when we decrease some cahracteristic and increase another,
+    // could be a problem if somehow we decrease some
+    // cahracteristic and increase another,
     // but it seems impossible right now
     if (prevSkillPoints === nextSkillPoints || soulsToSubtract === 0) {
       return character;
@@ -206,18 +176,7 @@ export class CharacterService {
   }
 
   async equip(id: number, newEquipment: UpdateEquipmentDto) {
-    const character = await this.repository.findOne({
-      where: { id },
-      relations: { equipment: true },
-    });
-
-    if (!character) {
-      throw new NotFoundException(`Character with ID ${id} not found`);
-    }
-
-    if (!character.equipment) {
-      throw new NotFoundException(`Character with ID ${id} has no equipment`);
-    }
+    const character = await this.findOne(id);
 
     character.equipment = { ...character.equipment, ...newEquipment };
 
@@ -225,18 +184,7 @@ export class CharacterService {
   }
 
   async switchHand(id: number, hand: Hand) {
-    const character = await this.repository.findOne({
-      where: { id },
-      relations: { equipment: true },
-    });
-
-    if (!character) {
-      throw new NotFoundException(`Character with ID ${id} not found`);
-    }
-
-    if (!character.equipment) {
-      throw new NotFoundException(`Character with ID ${id} has no equipment`);
-    }
+    const character = await this.findOne(id);
 
     switch (hand) {
       case Hand.left:

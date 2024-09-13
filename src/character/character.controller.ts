@@ -10,20 +10,32 @@ import {
 } from '@nestjs/common';
 import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
-import { UpdateCharacterDto } from './dto/update-character.dto';
 import { UpdateSoulsDto } from './dto/update-souls.dto';
 import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
 import { UpdateHumanityDto } from './dto/update-humanity.dto';
 import { UpdateEquipmentDto } from './dto/update-equipment.dto';
-import { Hand } from './types';
+import { GameClass, Hand } from './character.consts';
+import {
+  ApiBadRequestResponse,
+  ApiNotFoundResponse,
+  ApiParam,
+} from '@nestjs/swagger';
 
 @Controller('characters')
 export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
 
-  @Post()
-  create(@Body() createCharacterDto: CreateCharacterDto) {
-    return this.characterService.create(createCharacterDto);
+  @Post(':class')
+  @ApiParam({
+    name: 'class',
+    enum: GameClass,
+    description: 'Class to create character',
+  })
+  create(
+    @Param('class') gameClass: GameClass,
+    @Body() createCharacterDto: CreateCharacterDto,
+  ) {
+    return this.characterService.create(gameClass, createCharacterDto);
   }
 
   @Get()
@@ -58,6 +70,7 @@ export class CharacterController {
   }
 
   @Patch(':id/up')
+  @ApiNotFoundResponse({ description: `Character with ID not found` })
   levelup(
     @Param('id') id: string,
     @Body() characteristicsDto: UpdateCharacteristicsDto,
@@ -71,9 +84,16 @@ export class CharacterController {
   }
 
   @Patch(':id/equip/:hand')
+  @ApiBadRequestResponse({
+    description: 'Validation failed (enum string is expected)',
+  })
+  @ApiParam({
+    name: 'hand',
+    enum: Hand,
+    description: 'The hand to equip (left or right)',
+  })
   switchHand(
     @Param('id') id: string,
-    // TODO: more explicit error, not "message": "Validation failed (enum string is expected)"
     @Param('hand', new ParseEnumPipe(Hand))
     hand: Hand,
   ) {
