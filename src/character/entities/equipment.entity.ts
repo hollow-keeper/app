@@ -5,40 +5,40 @@ export class Equipment {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   helmet?: string;
 
-  @Column()
+  @Column({ nullable: true })
   armor?: string;
 
-  @Column()
+  @Column({ nullable: true })
   arms?: string;
 
-  @Column()
+  @Column({ nullable: true })
   legs?: string;
 
-  @Column()
+  @Column({ nullable: true })
   ring1?: string;
 
-  @Column()
+  @Column({ nullable: true })
   ring2?: string;
 
-  @Column()
+  @Column({ nullable: true })
   left_weapon_primary?: string;
 
-  @Column()
+  @Column({ nullable: true })
   right_weapon_primary?: string;
 
-  @Column()
+  @Column({ nullable: true })
   left_weapon_secondary?: string;
 
-  @Column()
+  @Column({ nullable: true })
   right_weapon_secondary?: string;
 
-  @Column()
+  @Column({ default: 0 })
   souls: number = 0;
 
-  @Column()
+  @Column({ default: 0 })
   humanity: number = 0;
 
   // @Column()

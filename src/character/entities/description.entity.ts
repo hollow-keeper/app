@@ -1,4 +1,5 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { GameClass } from '../character.consts';
 
 @Entity({ name: 'descriptions' })
 export class Description {
@@ -11,6 +12,6 @@ export class Description {
   @Column()
   name: string;
 
-  @Column()
-  game_class: string;
+  @Column({ enum: GameClass })
+  game_class: GameClass;
 }
