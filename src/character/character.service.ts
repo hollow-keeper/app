@@ -224,13 +224,49 @@ export class CharacterService {
     return this.repository.save(character);
   }
 
-  switchHand(id: number, hand: Hand) {}
+  async switchHand(id: number, hand: Hand) {
+    const character = await this.repository.findOne({
+      where: { id },
+      relations: { equipment: true },
+    });
 
-  update(id: number, updateCharacterDto: UpdateCharacterDto) {
-    return `This action updates a #${id} character`;
+    if (!character) {
+      throw new NotFoundException(`Character with ID ${id} not found`);
+    }
+
+    if (!character.equipment) {
+      throw new NotFoundException(`Character with ID ${id} has no equipment`);
+    }
+
+    switch (hand) {
+      case Hand.left:
+        [
+          character.equipment.left_weapon_primary,
+          character.equipment.left_weapon_secondary,
+        ] = [
+          character.equipment.left_weapon_secondary,
+          character.equipment.left_weapon_primary,
+        ];
+        break;
+
+      case Hand.right:
+        [
+          character.equipment.right_weapon_primary,
+          character.equipment.right_weapon_secondary,
+        ] = [
+          character.equipment.right_weapon_secondary,
+          character.equipment.right_weapon_primary,
+        ];
+        break;
+
+      default:
+        throw new Error("Case haven't been chosen");
+    }
+
+    return this.repository.save(character);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} character`;
+    return this.repository.delete({ id });
   }
 }

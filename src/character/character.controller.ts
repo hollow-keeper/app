@@ -57,14 +57,6 @@ export class CharacterController {
     );
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateCharacterDto: UpdateCharacterDto,
-  ) {
-    return this.characterService.update(+id, updateCharacterDto);
-  }
-
   @Patch(':id/up')
   levelup(
     @Param('id') id: string,
@@ -81,6 +73,7 @@ export class CharacterController {
   @Patch(':id/equip/:hand')
   switchHand(
     @Param('id') id: string,
+    // TODO: more explicit error, not "message": "Validation failed (enum string is expected)"
     @Param('hand', new ParseEnumPipe(Hand))
     hand: Hand,
   ) {
