@@ -44,6 +44,7 @@ export class CharacterController {
   }
 
   @Get(':id')
+  @ApiNotFoundResponse({ description: 'Charachter with ID wasnt found' })
   findOne(@Param('id') id: string) {
     return this.characterService.findOne(+id);
   }
@@ -71,6 +72,7 @@ export class CharacterController {
 
   @Patch(':id/up')
   @ApiNotFoundResponse({ description: `Character with ID not found` })
+  @ApiBadRequestResponse({ description: 'Not enough souls' })
   levelup(
     @Param('id') id: string,
     @Body() characteristicsDto: UpdateCharacteristicsDto,

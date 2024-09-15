@@ -40,6 +40,8 @@ export class CharacterService {
     gameClass: GameClass,
     { name, origin, equipment }: CreateCharacterDto,
   ) {
+    this.logger.log('create() has been invoked');
+
     const char = this.repository.create({
       description: {
         name,
@@ -53,7 +55,7 @@ export class CharacterService {
   }
 
   async findAll() {
-    this.logger.log('findAll has been invoked');
+    this.logger.log('findAll() has been invoked');
 
     const characters = await this.repository.find({
       relations: { description: true },
@@ -63,6 +65,8 @@ export class CharacterService {
   }
 
   async findOne(id: number) {
+    this.logger.log('findOne() has been invoked');
+
     if (!this.repository) {
       throw new Error('Repository is not initialized');
     }
@@ -80,17 +84,9 @@ export class CharacterService {
   }
 
   async getAvailableLevels(id: number) {
-    const character = await this.findOne(id);
+    this.logger.log('getAvailableLevels() has been invoked');
 
-    if (
-      !character.equipment ||
-      !character.characteristics ||
-      !character.characteristics.level
-    ) {
-      throw new NotFoundException(
-        `Character with ID ${id} has incomplete data`,
-      );
-    }
+    const character = await this.findOne(id);
 
     const { souls } = character.equipment;
 
@@ -113,6 +109,8 @@ export class CharacterService {
   }
 
   async updateSouls(id: number, souls: number) {
+    this.logger.log('updateSouls() has been invoked');
+
     const character = await this.findOne(id);
 
     character.equipment.souls += souls;
@@ -121,6 +119,8 @@ export class CharacterService {
   }
 
   async updateHumanity(id: number, humanity: number) {
+    this.logger.log('updateHumanity() has been invoked');
+
     const character = await this.findOne(id);
 
     character.equipment.humanity += humanity;
@@ -129,6 +129,8 @@ export class CharacterService {
   }
 
   async levelup(id: number, newCharacteristics: UpdateCharacteristicsDto) {
+    this.logger.log('levelup() has been invoked');
+
     const character = await this.findOne(id);
 
     const {
@@ -176,6 +178,8 @@ export class CharacterService {
   }
 
   async equip(id: number, newEquipment: UpdateEquipmentDto) {
+    this.logger.log('equip() has been invoked');
+
     const character = await this.findOne(id);
 
     character.equipment = { ...character.equipment, ...newEquipment };
@@ -184,6 +188,8 @@ export class CharacterService {
   }
 
   async switchHand(id: number, hand: Hand) {
+    this.logger.log('switchHand() has been invoked');
+
     const character = await this.findOne(id);
 
     switch (hand) {
@@ -215,6 +221,8 @@ export class CharacterService {
   }
 
   remove(id: number) {
+    this.logger.log('remove() has been invoked');
+
     return this.repository.delete({ id });
   }
 }
