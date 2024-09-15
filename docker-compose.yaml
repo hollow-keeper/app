@@ -1,11 +1,10 @@
-version: '3.8'
 services:
   back:
     build: ../hollow-keeper
     container_name: hollow_back_c
     ports:
       - '3000:3000'
-    environment:
+    env_file:
       - .env.docker
     volumes:
       - .:/back
@@ -21,10 +20,10 @@ services:
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=hollow_db
     volumes:
-      - /pgdata:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
-  pg_admin:
+  pgadmin:
     restart: always
     image: dpage/pgadmin4
     container_name: hollow_pg_admin_c
@@ -34,4 +33,9 @@ services:
     ports:
       - 5050:80
     volumes:
-      - /pgadmin:/var/lib/pgadmin
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
+volumes:
+  pgadmin_data:
+  postgres_data:
