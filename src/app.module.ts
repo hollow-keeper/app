@@ -19,6 +19,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         database: conf.get('DB_NAME'),
         entities: ['dist/**/*.entity.js'],
         migrations: ['dist/migration/*.js'],
+        ssl: true,
       }),
     }),
   ],
