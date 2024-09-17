@@ -6,15 +6,11 @@ import {
   Patch,
   Param,
   Delete,
-  ParseEnumPipe,
 } from '@nestjs/common';
 import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
-import { UpdateSoulsDto } from './dto/update-souls.dto';
 import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
-import { UpdateHumanityDto } from './dto/update-humanity.dto';
-import { UpdateEquipmentDto } from './dto/update-equipment.dto';
-import { GameClass, Hand } from './character.consts';
+import { GameClass } from './character.consts';
 import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
@@ -54,22 +50,6 @@ export class CharacterController {
     return this.characterService.getAvailableLevels(+id);
   }
 
-  @Patch(':id/souls')
-  updateSouls(@Param('id') id: string, @Body() updateSoulsDto: UpdateSoulsDto) {
-    return this.characterService.updateSouls(+id, updateSoulsDto.souls);
-  }
-
-  @Patch(':id/humanity')
-  updateHumanity(
-    @Param('id') id: string,
-    @Body() updateHumanityDto: UpdateHumanityDto,
-  ) {
-    return this.characterService.updateHumanity(
-      +id,
-      updateHumanityDto.humanity,
-    );
-  }
-
   @Patch(':id/up')
   @ApiNotFoundResponse({ description: `Character with ID not found` })
   @ApiBadRequestResponse({ description: 'Not enough souls' })
@@ -78,28 +58,6 @@ export class CharacterController {
     @Body() characteristicsDto: UpdateCharacteristicsDto,
   ) {
     return this.characterService.levelup(+id, characteristicsDto);
-  }
-
-  @Patch(':id/equip')
-  equip(@Param('id') id: string, @Body() equipmentDto: UpdateEquipmentDto) {
-    return this.characterService.equip(+id, equipmentDto);
-  }
-
-  @Patch(':id/equip/:hand')
-  @ApiBadRequestResponse({
-    description: 'Validation failed (enum string is expected)',
-  })
-  @ApiParam({
-    name: 'hand',
-    enum: Hand,
-    description: 'The hand to equip (left or right)',
-  })
-  switchHand(
-    @Param('id') id: string,
-    @Param('hand', new ParseEnumPipe(Hand))
-    hand: Hand,
-  ) {
-    return this.characterService.switchHand(+id, hand);
   }
 
   @Delete(':id')

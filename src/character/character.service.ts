@@ -9,8 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Character } from './entities/character.entity';
 import { Repository } from 'typeorm';
 import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
-import { UpdateEquipmentDto } from './dto/update-equipment.dto';
-import { GameClass, gameClasses, Hand } from './character.consts';
+import { GameClass, gameClasses } from './character.consts';
 
 const calculateSoulsForLevel = (level: number) => {
   const levelsArr = [0, 637, 690, 707, 724, 741, 758, 775, 793, 811, 829];
@@ -36,11 +35,10 @@ export class CharacterService {
     private repository: Repository<Character>,
   ) {}
 
-  create(
-    gameClass: GameClass,
-    { name, origin, equipment }: CreateCharacterDto,
-  ) {
+  create(gameClass: GameClass, { name, origin }: CreateCharacterDto) {
     this.logger.log('create() has been invoked');
+
+    const { equipment, characteristics } = gameClasses[gameClass];
 
     const char = this.repository.create({
       description: {
@@ -48,9 +46,10 @@ export class CharacterService {
         origin,
         game_class: gameClass,
       },
-      characteristics: gameClasses[gameClass],
+      characteristics,
       equipment,
     });
+
     return this.repository.save(char);
   }
 
@@ -108,26 +107,6 @@ export class CharacterService {
     return levels;
   }
 
-  async updateSouls(id: number, souls: number) {
-    this.logger.log('updateSouls() has been invoked');
-
-    const character = await this.findOne(id);
-
-    character.equipment.souls += souls;
-
-    return this.repository.save(character);
-  }
-
-  async updateHumanity(id: number, humanity: number) {
-    this.logger.log('updateHumanity() has been invoked');
-
-    const character = await this.findOne(id);
-
-    character.equipment.humanity += humanity;
-
-    return this.repository.save(character);
-  }
-
   async levelup(id: number, newCharacteristics: UpdateCharacteristicsDto) {
     this.logger.log('levelup() has been invoked');
 
@@ -173,49 +152,6 @@ export class CharacterService {
     };
 
     character.equipment.souls -= soulsToSubtract;
-
-    return this.repository.save(character);
-  }
-
-  async equip(id: number, newEquipment: UpdateEquipmentDto) {
-    this.logger.log('equip() has been invoked');
-
-    const character = await this.findOne(id);
-
-    character.equipment = { ...character.equipment, ...newEquipment };
-
-    return this.repository.save(character);
-  }
-
-  async switchHand(id: number, hand: Hand) {
-    this.logger.log('switchHand() has been invoked');
-
-    const character = await this.findOne(id);
-
-    switch (hand) {
-      case Hand.left:
-        [
-          character.equipment.left_weapon_primary,
-          character.equipment.left_weapon_secondary,
-        ] = [
-          character.equipment.left_weapon_secondary,
-          character.equipment.left_weapon_primary,
-        ];
-        break;
-
-      case Hand.right:
-        [
-          character.equipment.right_weapon_primary,
-          character.equipment.right_weapon_secondary,
-        ] = [
-          character.equipment.right_weapon_secondary,
-          character.equipment.right_weapon_primary,
-        ];
-        break;
-
-      default:
-        throw new Error("Case haven't been chosen");
-    }
 
     return this.repository.save(character);
   }

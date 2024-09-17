@@ -1,7 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, ValidateNested, IsDefined } from 'class-validator';
-import { EquipmentDto } from './equipment.dto';
-import { Type } from 'class-transformer';
+import { IsString } from 'class-validator';
 
 export class CreateCharacterDto {
   @ApiProperty()
@@ -12,12 +10,5 @@ export class CreateCharacterDto {
   @IsString()
   name: string;
 
-  //TODO:
-  @IsDefined()
-  @ApiProperty()
-  @ValidateNested()
-  @Type(() => EquipmentDto)
-  equipment: EquipmentDto;
-
-  //avatar
+  //TODO: avatar
 }
