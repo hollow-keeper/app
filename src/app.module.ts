@@ -20,6 +20,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         entities: ['dist/**/*.entity.js'],
         migrations: ['dist/migration/*.js'],
         ssl: true,
+        extra: {
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        },
       }),
     }),
   ],

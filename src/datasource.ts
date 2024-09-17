@@ -16,6 +16,11 @@ const connectionOptions: DataSourceOptions = {
   entities: ['src/**/*.entity.ts'],
   migrations: ['src/migrations/*.ts'],
   ssl: true,
+  extra: {
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  },
 };
 
 export default new DataSource({
