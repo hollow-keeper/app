@@ -4,8 +4,6 @@ import { DataSourceOptions } from 'typeorm/data-source/DataSourceOptions';
 
 configDotenv();
 
-console.log(process.env.DB_HOST);
-
 const connectionOptions: DataSourceOptions = {
   type: 'postgres',
   host: process.env.DB_HOST,
@@ -15,12 +13,16 @@ const connectionOptions: DataSourceOptions = {
   database: process.env.DB_NAME,
   entities: ['src/**/*.entity.ts'],
   migrations: ['src/migrations/*.ts'],
-  ssl: true,
-  extra: {
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  },
+  ...(process.env.NODE_ENV !== 'development'
+    ? {
+        ssl: true,
+        extra: {
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        },
+      }
+    : {}),
 };
 
 export default new DataSource({

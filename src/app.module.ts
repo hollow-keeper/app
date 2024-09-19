@@ -20,12 +20,16 @@ import { EquipmentModule } from './equipment/equipment.module';
         database: conf.get('DB_NAME'),
         entities: ['dist/**/*.entity.js'],
         migrations: ['dist/migration/*.js'],
-        ssl: true,
-        extra: {
-          ssl: {
-            rejectUnauthorized: false,
-          },
-        },
+        ...(conf.get('NODE_ENV') !== 'development'
+          ? {
+              ssl: true,
+              extra: {
+                ssl: {
+                  rejectUnauthorized: false,
+                },
+              },
+            }
+          : {}),
       }),
     }),
     EquipmentModule,
