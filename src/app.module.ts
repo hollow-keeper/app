@@ -3,10 +3,10 @@ import { CharacterModule } from './character/character.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EquipmentModule } from './equipment/equipment.module';
+import { ItemModule } from './item/item.module';
 
 @Module({
   imports: [
-    CharacterModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -32,7 +32,9 @@ import { EquipmentModule } from './equipment/equipment.module';
           : {}),
       }),
     }),
+    CharacterModule,
     EquipmentModule,
+    ItemModule,
   ],
 })
 export class AppModule {}
