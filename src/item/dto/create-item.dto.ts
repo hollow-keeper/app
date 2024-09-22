@@ -1,7 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber } from 'class-validator';
+import { IsNumber, IsObject, IsString } from 'class-validator';
 
 export class CreateItemDto {
+  @ApiProperty()
+  @IsString()
   name: string;
 
   @ApiProperty()
@@ -12,9 +14,19 @@ export class CreateItemDto {
   @IsNumber()
   balance: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    nullable: true,
+    type: 'object',
+    example: { dexterity: 3, strength: 1 },
+  })
+  @IsObject()
   characteristics_bonus?: Record<string, string>;
 
-  @ApiProperty()
+  @ApiProperty({
+    nullable: true,
+    type: 'object',
+    example: { armor: 2, balance: 4 },
+  })
+  @IsObject()
   properties_bonus?: Record<string, string>;
 }
