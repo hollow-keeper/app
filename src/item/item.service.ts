@@ -34,7 +34,7 @@ export class ItemService {
       throw new Error('Repository is not initialized');
     }
 
-    const item = await this.repository.find({ where: { id } });
+    const item = await this.repository.findOne({ where: { id } });
 
     if (!item) {
       throw new NotFoundException(`Item with ID ${id} not found`);
