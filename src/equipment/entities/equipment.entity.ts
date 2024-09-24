@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Item } from '../../item/entities/item.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'equipment' })
 export class Equipment {
@@ -26,14 +33,22 @@ export class Equipment {
   @Column({ nullable: true })
   left_weapon_primary?: string;
 
-  @Column({ nullable: true })
-  right_weapon_primary?: string;
+  @OneToOne(() => Item, { cascade: true, nullable: true })
+  @JoinColumn({
+    name: 'right_weapon_primary_id',
+    referencedColumnName: 'id',
+  })
+  right_weapon_primary?: Item;
 
   @Column({ nullable: true })
   left_weapon_secondary?: string;
 
-  @Column({ nullable: true })
-  right_weapon_secondary?: string;
+  @OneToOne(() => Item, { cascade: true, nullable: true })
+  @JoinColumn({
+    name: 'right_weapon_secondary_id',
+    referencedColumnName: 'id',
+  })
+  right_weapon_secondary?: Item;
 
   @Column({ default: 0 })
   souls: number = 0;
