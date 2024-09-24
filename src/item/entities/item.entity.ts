@@ -22,10 +22,10 @@ export class Item {
   balance: number;
 
   @Column({ type: 'jsonb', nullable: true })
-  characteristics_bonus?: Record<string, string>;
+  characteristics_bonus?: Record<string, number>;
 
   @Column({ type: 'jsonb', nullable: true })
-  properties_bonus?: Record<string, string>;
+  properties_bonus?: Record<string, number>;
 }
 
 enum EDamageType {

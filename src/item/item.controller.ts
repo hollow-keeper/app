@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ItemService } from './item.service';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
+import { ApiBadRequestResponse, ApiNotFoundResponse } from '@nestjs/swagger';
 
 @Controller('item')
 export class ItemController {
@@ -18,6 +27,10 @@ export class ItemController {
   }
 
   @Get(':id')
+  @ApiBadRequestResponse({
+    description: 'Invalid id: id must be a positive integer',
+  })
+  @ApiNotFoundResponse({ description: 'Item with ID not found' })
   findOne(@Param('id') id: string) {
     return this.itemService.findOne(+id);
   }

@@ -1,4 +1,9 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -28,10 +33,20 @@ export class ItemService {
   }
 
   async findOne(id: number) {
-    this.logger.log('findOne() has been invoked');
+    this.logger.log(`findOne() has been invoked with id: ${id}`);
 
     if (!this.repository) {
       throw new Error('Repository is not initialized');
+    }
+
+    if (id === null || id === undefined) {
+      return null;
+    }
+
+    if (isNaN(id) || !Number.isInteger(+id) || +id <= 0) {
+      throw new BadRequestException(
+        'Invalid id: id must be a positive integer',
+      );
     }
 
     const item = await this.repository.findOne({ where: { id } });
@@ -44,7 +59,7 @@ export class ItemService {
   }
 
   async update(id: number, updateItemDto: UpdateItemDto) {
-    this.logger.log('update() has been invoked');
+    this.logger.log(`update() has been invoked with ID ${id}`);
 
     const item = await this.findOne(id);
 
@@ -54,7 +69,7 @@ export class ItemService {
   }
 
   remove(id: number) {
-    this.logger.log('remove() has been invoked');
+    this.logger.log(`remove() has been invoked with ID ${id}`);
 
     return this.repository.delete({ id });
   }
