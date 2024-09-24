@@ -43,19 +43,23 @@ export class EquipmentService {
 
     const character = await this.characterService.findOne(id);
 
-    const right_weapon_primary = await this.itemService.findOne(
-      newEquipment.right_weapon_primary_id,
+    const items = {};
+    const itemSlots = Object.keys(newEquipment).filter((key) =>
+      key.endsWith('_id'),
     );
 
-    const right_weapon_secondary = await this.itemService.findOne(
-      newEquipment.right_weapon_secondary_id,
-    );
+    // pbbl should use smth like Promise.all
+    // nut looks like it wouldnt save much
+    // but will reduce readability
+    for (let slot of itemSlots) {
+      const item = await this.itemService.findOne(newEquipment[`${slot}`]);
+      items[slot.replace('_id', '')] = item;
+    }
 
     character.equipment = {
       ...character.equipment,
       ...newEquipment,
-      right_weapon_primary,
-      right_weapon_secondary,
+      ...items,
     };
 
     return this.repository.save(character.equipment);

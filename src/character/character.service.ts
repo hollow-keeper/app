@@ -76,17 +76,19 @@ export class CharacterService {
         description: true,
         characteristics: true,
         equipment: {
+          helmet: true,
+          armor: true,
+          arms: true,
+          legs: true,
+          ring1: true,
+          ring2: true,
+          left_weapon_primary: true,
           right_weapon_primary: true,
+          left_weapon_secondary: true,
           right_weapon_secondary: true,
-          // helmet: true,
-          // armor: true,
-          // whatever: true,
-          // ...
         },
       },
     });
-
-    console.log(character);
 
     if (!character) {
       throw new NotFoundException(`Character with ID ${id} not found`);
