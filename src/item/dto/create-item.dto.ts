@@ -20,7 +20,7 @@ export class CreateItemDto {
     example: { dexterity: 3, strength: 1 },
   })
   @IsObject()
-  characteristics_bonus?: Record<string, string>;
+  characteristics_bonus?: Record<string, number>;
 
   @ApiProperty({
     nullable: true,
@@ -28,5 +28,5 @@ export class CreateItemDto {
     example: { armor: 2, balance: 4 },
   })
   @IsObject()
-  properties_bonus?: Record<string, string>;
+  properties_bonus?: Record<string, number>;
 }

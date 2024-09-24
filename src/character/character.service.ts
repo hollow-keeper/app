@@ -64,7 +64,7 @@ export class CharacterService {
   }
 
   async findOne(id: number) {
-    this.logger.log('findOne() has been invoked');
+    this.logger.log(`findOne() has been invoked with ID ${id}`);
 
     if (!this.repository) {
       throw new Error('Repository is not initialized');
@@ -72,8 +72,21 @@ export class CharacterService {
 
     const character = await this.repository.findOne({
       where: { id },
-      relations: { description: true, characteristics: true, equipment: true },
+      relations: {
+        description: true,
+        characteristics: true,
+        equipment: {
+          right_weapon_primary: true,
+          right_weapon_secondary: true,
+          // helmet: true,
+          // armor: true,
+          // whatever: true,
+          // ...
+        },
+      },
     });
+
+    console.log(character);
 
     if (!character) {
       throw new NotFoundException(`Character with ID ${id} not found`);
@@ -83,7 +96,7 @@ export class CharacterService {
   }
 
   async getAvailableLevels(id: number) {
-    this.logger.log('getAvailableLevels() has been invoked');
+    this.logger.log(`getAvailableLevels() has been invoked with ID ${id}`);
 
     const character = await this.findOne(id);
 
@@ -108,7 +121,7 @@ export class CharacterService {
   }
 
   async levelup(id: number, newCharacteristics: UpdateCharacteristicsDto) {
-    this.logger.log('levelup() has been invoked');
+    this.logger.log(`levelup() has been invoked with ID ${id}`);
 
     const character = await this.findOne(id);
 

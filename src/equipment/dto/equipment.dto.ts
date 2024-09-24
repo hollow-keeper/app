@@ -3,44 +3,44 @@ import { IsNumber, IsString } from 'class-validator';
 
 export class EquipmentDto {
   @ApiProperty()
-  @IsString()
-  helmet?: string;
+  @IsNumber()
+  helmet_id?: number;
 
   @ApiProperty()
-  @IsString()
-  armor?: string;
+  @IsNumber()
+  armor_id?: number;
 
   @ApiProperty()
-  @IsString()
-  arms?: string;
+  @IsNumber()
+  arms_id?: number;
 
   @ApiProperty()
-  @IsString()
-  legs?: string;
+  @IsNumber()
+  legs_id?: number;
 
   @ApiProperty()
-  @IsString()
-  ring1?: string;
+  @IsNumber()
+  ring1_id?: number;
 
   @ApiProperty()
-  @IsString()
-  ring2?: string;
+  @IsNumber()
+  ring2_id?: number;
 
   @ApiProperty()
-  @IsString()
-  left_weapon_primary?: string;
+  @IsNumber()
+  left_weapon_primary_id?: number;
 
   @ApiProperty()
-  @IsString()
-  right_weapon_primary?: string;
+  @IsNumber()
+  right_weapon_primary_id?: number;
 
   @ApiProperty()
-  @IsString()
-  left_weapon_secondary?: string;
+  @IsNumber()
+  left_weapon_secondary_id?: number;
 
   @ApiProperty()
-  @IsString()
-  right_weapon_secondary?: string;
+  @IsNumber()
+  right_weapon_secondary_id?: number;
 
   @ApiProperty()
   @IsNumber()

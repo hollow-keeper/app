@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CharacterService } from 'src/character/character.service';
 import { Hand } from './equipment.consts';
+import { ItemService } from 'src/item/item.service';
 
 @Injectable()
 export class EquipmentService {
@@ -14,6 +15,7 @@ export class EquipmentService {
     @InjectRepository(Equipment)
     private repository: Repository<Equipment>,
     private characterService: CharacterService,
+    private itemService: ItemService,
   ) {}
 
   async updateSouls(id: number, souls: number) {
@@ -37,11 +39,24 @@ export class EquipmentService {
   }
 
   async equip(id: number, newEquipment: UpdateEquipmentDto) {
-    this.logger.log('equip() has been invoked');
+    this.logger.log(`equip() has been invoked with ID ${id}`);
 
     const character = await this.characterService.findOne(id);
 
-    character.equipment = { ...character.equipment, ...newEquipment };
+    const right_weapon_primary = await this.itemService.findOne(
+      newEquipment.right_weapon_primary_id,
+    );
+
+    const right_weapon_secondary = await this.itemService.findOne(
+      newEquipment.right_weapon_secondary_id,
+    );
+
+    character.equipment = {
+      ...character.equipment,
+      ...newEquipment,
+      right_weapon_primary,
+      right_weapon_secondary,
+    };
 
     return this.repository.save(character.equipment);
   }
