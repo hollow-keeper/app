@@ -12,26 +12,54 @@ export class Equipment {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
-  helmet?: string;
+  @OneToOne(() => Item, { cascade: true, nullable: true })
+  @JoinColumn({
+    name: 'helmet_id',
+    referencedColumnName: 'id',
+  })
+  helmet?: Item;
 
-  @Column({ nullable: true })
-  armor?: string;
+  @OneToOne(() => Item, { cascade: true, nullable: true })
+  @JoinColumn({
+    name: 'armor_id',
+    referencedColumnName: 'id',
+  })
+  armor?: Item;
 
-  @Column({ nullable: true })
-  arms?: string;
+  @OneToOne(() => Item, { cascade: true, nullable: true })
+  @JoinColumn({
+    name: 'arms_id',
+    referencedColumnName: 'id',
+  })
+  arms?: Item;
 
-  @Column({ nullable: true })
-  legs?: string;
+  @OneToOne(() => Item, { cascade: true, nullable: true })
+  @JoinColumn({
+    name: 'legs_id',
+    referencedColumnName: 'id',
+  })
+  legs?: Item;
 
-  @Column({ nullable: true })
-  ring1?: string;
+  @OneToOne(() => Item, { cascade: true, nullable: true })
+  @JoinColumn({
+    name: 'ring1_id',
+    referencedColumnName: 'id',
+  })
+  ring1?: Item;
 
-  @Column({ nullable: true })
-  ring2?: string;
+  @OneToOne(() => Item, { cascade: true, nullable: true })
+  @JoinColumn({
+    name: 'ring2_id',
+    referencedColumnName: 'id',
+  })
+  ring2?: Item;
 
-  @Column({ nullable: true })
-  left_weapon_primary?: string;
+  @OneToOne(() => Item, { cascade: true, nullable: true })
+  @JoinColumn({
+    name: 'left_weapon_primary_id',
+    referencedColumnName: 'id',
+  })
+  left_weapon_primary?: Item;
 
   @OneToOne(() => Item, { cascade: true, nullable: true })
   @JoinColumn({
@@ -40,8 +68,12 @@ export class Equipment {
   })
   right_weapon_primary?: Item;
 
-  @Column({ nullable: true })
-  left_weapon_secondary?: string;
+  @OneToOne(() => Item, { cascade: true, nullable: true })
+  @JoinColumn({
+    name: 'left_weapon_secondary_id',
+    referencedColumnName: 'id',
+  })
+  left_weapon_secondary?: Item;
 
   @OneToOne(() => Item, { cascade: true, nullable: true })
   @JoinColumn({
