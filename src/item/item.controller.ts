@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
+  HttpStatus,
 } from '@nestjs/common';
 import { ItemService } from './item.service';
 import { CreateItemDto } from './dto/create-item.dto';
@@ -31,8 +33,14 @@ export class ItemController {
     description: 'Invalid id: id must be a positive integer',
   })
   @ApiNotFoundResponse({ description: 'Item with ID not found' })
-  findOne(@Param('id') id: string) {
-    return this.itemService.findOne(+id);
+  findOne(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ) {
+    return this.itemService.findOne(id);
   }
 
   @Patch(':id')

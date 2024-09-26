@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
+  HttpStatus,
 } from '@nestjs/common';
 import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
@@ -41,8 +43,14 @@ export class CharacterController {
 
   @Get(':id')
   @ApiNotFoundResponse({ description: 'Charachter with ID wasnt found' })
-  findOne(@Param('id') id: string) {
-    return this.characterService.findOne(+id);
+  findOne(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ) {
+    return this.characterService.findOne(id);
   }
 
   @Get(':id/available-levels')
