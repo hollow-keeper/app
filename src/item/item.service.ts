@@ -8,7 +8,7 @@ import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Item } from './entities/item.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 @Injectable()
 export class ItemService {
@@ -56,6 +56,23 @@ export class ItemService {
     }
 
     return item;
+  }
+
+  async findMany(ids: number[]) {
+    const itemsList = await this.repository.find({ where: { id: In(ids) } });
+
+    const itemMap = itemsList.reduce((acc, item) => {
+      acc[item.id] = item;
+      return acc;
+    });
+
+    for (let id of ids) {
+      if (!itemMap[id]) {
+        throw new NotFoundException(`Item with ID ${id} not found`);
+      }
+    }
+
+    return itemMap;
   }
 
   async update(id: number, updateItemDto: UpdateItemDto) {

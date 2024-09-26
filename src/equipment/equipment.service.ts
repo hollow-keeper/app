@@ -44,21 +44,19 @@ export class EquipmentService {
     const character = await this.characterService.findOne(id);
 
     const items = {};
-    const itemSlots = Object.keys(newEquipment).filter((key) =>
-      key.endsWith('_id'),
+    const itemSlots = Object.keys(newEquipment);
+    const itemIds = Object.values(newEquipment).filter(
+      (id) => typeof id === 'number',
     );
 
-    // pbbl should use smth like Promise.all
-    // nut looks like it wouldnt save much
-    // but will reduce readability
+    const itemDict = await this.itemService.findMany(itemIds);
+
     for (let slot of itemSlots) {
-      const item = await this.itemService.findOne(newEquipment[`${slot}`]);
-      items[slot.replace('_id', '')] = item;
+      items[slot.replace('_id', '')] = itemDict[newEquipment[slot]] ?? null;
     }
 
     character.equipment = {
       ...character.equipment,
-      ...newEquipment,
       ...items,
     };
 
@@ -96,9 +94,5 @@ export class EquipmentService {
     }
 
     return this.repository.save(character.equipment);
-  }
-
-  update(id: number, updateEquipmentDto: UpdateEquipmentDto) {
-    return `This action updates a #${id} equipment`;
   }
 }
