@@ -54,22 +54,38 @@ export class CharacterController {
   }
 
   @Get(':id/available-levels')
-  getAvailableLevels(@Param('id') id: string) {
-    return this.characterService.getAvailableLevels(+id);
+  getAvailableLevels(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ) {
+    return this.characterService.getAvailableLevels(id);
   }
 
   @Patch(':id/up')
   @ApiNotFoundResponse({ description: `Character with ID not found` })
   @ApiBadRequestResponse({ description: 'Not enough souls' })
   levelup(
-    @Param('id') id: string,
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
     @Body() characteristicsDto: UpdateCharacteristicsDto,
   ) {
-    return this.characterService.levelup(+id, characteristicsDto);
+    return this.characterService.levelup(id, characteristicsDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.characterService.remove(+id);
+  remove(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ) {
+    return this.characterService.remove(id);
   }
 }
