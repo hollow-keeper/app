@@ -10,6 +10,7 @@ import { Character } from './entities/character.entity';
 import { Repository } from 'typeorm';
 import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
 import { GameClass, gameClasses } from './character.consts';
+import { PropertiesCalculatorService } from 'src/properties-calculator/properties-calculator.service';
 
 const calculateSoulsForLevel = (level: number) => {
   const levelsArr = [0, 637, 690, 707, 724, 741, 758, 775, 793, 811, 829];
@@ -33,12 +34,15 @@ export class CharacterService {
   constructor(
     @InjectRepository(Character)
     private repository: Repository<Character>,
+    private propertiesCalculator: PropertiesCalculatorService,
   ) {}
 
   create(gameClass: GameClass, { name, origin }: CreateCharacterDto) {
     this.logger.log('create() has been invoked');
 
     const { equipment, characteristics } = gameClasses[gameClass];
+
+    //check if item actually exist?
 
     const char = this.repository.create({
       description: {
@@ -94,6 +98,16 @@ export class CharacterService {
       throw new NotFoundException(`Character with ID ${id} not found`);
     }
 
+    /**
+     * {
+     *  equipment: ...
+     *  description: ...
+     *  propertirs: {
+     *
+     *  }
+     * }
+     */
+
     return character;
   }
 
@@ -114,6 +128,8 @@ export class CharacterService {
       soulsLeft -= soulsNeeded;
 
       levels++;
+
+      // extract to calc service
       soulsNeeded = calculateSoulsForLevel(
         character.characteristics.level + levels,
       );
