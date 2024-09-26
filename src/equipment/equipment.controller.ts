@@ -6,7 +6,7 @@ import { UpdateSoulsDto } from './dto/update-souls.dto';
 import { ApiBadRequestResponse, ApiParam } from '@nestjs/swagger';
 import { Hand } from './equipment.consts';
 
-@Controller('equipment')
+@Controller('characters')
 export class EquipmentController {
   constructor(private readonly equipmentService: EquipmentService) {}
 
@@ -46,13 +46,5 @@ export class EquipmentController {
     hand: Hand,
   ) {
     return this.equipmentService.switchHand(+id, hand);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateEquipmentDto: UpdateEquipmentDto,
-  ) {
-    return this.equipmentService.update(+id, updateEquipmentDto);
   }
 }
