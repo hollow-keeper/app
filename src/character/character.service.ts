@@ -10,7 +10,7 @@ import { Character } from './entities/character.entity';
 import { Repository } from 'typeorm';
 import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
 import { GameClass, gameClasses } from './character.consts';
-import { PropertiesCalculatorService } from 'src/properties-calculator/properties-calculator.service';
+import { PropertiesCalculatorService } from '../properties-calculator/properties-calculator.service';
 
 const calcTotalCharacteristics = (characteristics: UpdateCharacteristicsDto) =>
   Object.values(characteristics).reduce((acc, val) => (acc += val));

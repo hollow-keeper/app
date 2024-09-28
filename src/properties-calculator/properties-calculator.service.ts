@@ -244,9 +244,6 @@ export class PropertiesCalculatorService {
 
   propertiesBonus(equipment: Equipment) {
     return this.items(equipment, 'properties_bonus').reduce((acc, item) => {
-      if (!item) {
-        return acc;
-      }
       for (const [key, value] of Object.entries(item)) {
         acc[key] = (acc[key] ?? 0) + value;
       }
@@ -377,6 +374,7 @@ export class PropertiesCalculatorService {
       spellSlots: this.spellSlots(characteristics, equipment),
       staminaRecoveryRate: this.staminaRecoveryRate(characteristics, equipment),
       balanceRecoveryRate: this.balanceRecoveryRate(characteristics, equipment),
+      balance: this.balance(equipment),
       runLength: this.runLength(characteristics, equipment),
       stepLength: this.stepLength(characteristics, equipment),
       runCost: this.runCost(characteristics, equipment),
