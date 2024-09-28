@@ -68,7 +68,7 @@ export const gameClasses: GameClasses = {
       intelligence: 9,
       faith: 9,
       perception: 0,
-      charisma: 86,
+      charisma: 9,
     },
   },
   [GameClass.knight]: {
@@ -87,7 +87,7 @@ export const gameClasses: GameClasses = {
       intelligence: 9,
       faith: 11,
       perception: 0,
-      charisma: 86,
+      charisma: 11,
     },
   },
   [GameClass.wanderer]: {
@@ -106,7 +106,7 @@ export const gameClasses: GameClasses = {
       intelligence: 11,
       faith: 8,
       perception: 0,
-      charisma: 86,
+      charisma: 10,
     },
   },
   [GameClass.thief]: {
@@ -125,7 +125,7 @@ export const gameClasses: GameClasses = {
       intelligence: 12,
       faith: 11,
       perception: 0,
-      charisma: 86,
+      charisma: 11,
     },
   },
   [GameClass.bandit]: {
@@ -144,7 +144,7 @@ export const gameClasses: GameClasses = {
       intelligence: 8,
       faith: 10,
       perception: 0,
-      charisma: 86,
+      charisma: 10,
     },
   },
   [GameClass.hunter]: {
@@ -163,7 +163,7 @@ export const gameClasses: GameClasses = {
       intelligence: 9,
       faith: 9,
       perception: 0,
-      charisma: 86,
+      charisma: 9,
     },
   },
   [GameClass.sorcerer]: {
@@ -182,7 +182,7 @@ export const gameClasses: GameClasses = {
       intelligence: 15,
       faith: 8,
       perception: 0,
-      charisma: 82,
+      charisma: 12,
     },
   },
   [GameClass.pyromancer]: {
@@ -201,7 +201,7 @@ export const gameClasses: GameClasses = {
       intelligence: 10,
       faith: 8,
       perception: 0,
-      charisma: 84,
+      charisma: 9,
     },
   },
   [GameClass.cleric]: {
@@ -220,7 +220,7 @@ export const gameClasses: GameClasses = {
       intelligence: 8,
       faith: 14,
       perception: 0,
-      charisma: 84,
+      charisma: 11,
     },
   },
   [GameClass.deprived]: {
@@ -239,7 +239,7 @@ export const gameClasses: GameClasses = {
       intelligence: 11,
       faith: 11,
       perception: 0,
-      charisma: 88,
+      charisma: 8,
     },
   },
 };

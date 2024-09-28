@@ -12,18 +12,6 @@ import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
 import { GameClass, gameClasses } from './character.consts';
 import { PropertiesCalculatorService } from 'src/properties-calculator/properties-calculator.service';
 
-const calculateSoulsForLevel = (level: number) => {
-  const levelsArr = [0, 637, 690, 707, 724, 741, 758, 775, 793, 811, 829];
-
-  if (level < 11) {
-    return levelsArr[level];
-  }
-
-  return Math.floor(
-    0.02 * Math.pow(level, 3) + 3.06 * Math.pow(level, 2) + 105.6 * level - 895,
-  );
-};
-
 const calcTotalCharacteristics = (characteristics: UpdateCharacteristicsDto) =>
   Object.values(characteristics).reduce((acc, val) => (acc += val));
 
@@ -42,7 +30,11 @@ export class CharacterService {
 
     const { equipment, characteristics } = gameClasses[gameClass];
 
+    // NOTE:
     //check if item actually exist?
+    //got db err (FK constr) when generate char
+    //with default weapon
+    //after dropping all tables
 
     const char = this.repository.create({
       description: {
@@ -98,17 +90,9 @@ export class CharacterService {
       throw new NotFoundException(`Character with ID ${id} not found`);
     }
 
-    /**
-     * {
-     *  equipment: ...
-     *  description: ...
-     *  propertirs: {
-     *
-     *  }
-     * }
-     */
+    const properties = this.propertiesCalculator.calculate(character);
 
-    return character;
+    return { ...character, properties };
   }
 
   async getAvailableLevels(id: number) {
@@ -120,7 +104,7 @@ export class CharacterService {
 
     let soulsLeft = souls;
     let levels = 0;
-    let soulsNeeded = calculateSoulsForLevel(
+    let soulsNeeded = this.propertiesCalculator.requiredSouls(
       character.characteristics.level + levels,
     );
 
@@ -130,7 +114,7 @@ export class CharacterService {
       levels++;
 
       // extract to calc service
-      soulsNeeded = calculateSoulsForLevel(
+      soulsNeeded = this.propertiesCalculator.requiredSouls(
         character.characteristics.level + levels,
       );
     }
@@ -160,7 +144,7 @@ export class CharacterService {
 
     for (let i = 0; i < nextSkillPoints - prevSkillPoints; i++) {
       const currentLevel = level + i;
-      soulsToSubtract += calculateSoulsForLevel(currentLevel);
+      soulsToSubtract += this.propertiesCalculator.requiredSouls(currentLevel);
     }
 
     // could be a problem if somehow we decrease some
