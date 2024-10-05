@@ -3,9 +3,9 @@ import { UpdateEquipmentDto } from './dto/update-equipment.dto';
 import { Equipment } from './entities/equipment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CharacterService } from 'src/character/character.service';
+import { CharacterService } from '../character/character.service';
 import { Hand } from './equipment.consts';
-import { ItemService } from 'src/item/item.service';
+import { ItemService } from '../item/item.service';
 
 @Injectable()
 export class EquipmentService {

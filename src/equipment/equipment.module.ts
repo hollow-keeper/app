@@ -10,5 +10,6 @@ import { ItemModule } from 'src/item/item.module';
   imports: [ItemModule, CharacterModule, TypeOrmModule.forFeature([Equipment])],
   controllers: [EquipmentController],
   providers: [EquipmentService],
+  exports: [EquipmentService],
 })
 export class EquipmentModule {}
