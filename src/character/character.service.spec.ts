@@ -1,94 +1,194 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CharacterService } from './character.service';
-import { NotFoundException } from '@nestjs/common';
-import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { Character } from './entities/character.entity';
+import { PropertiesCalculatorService } from '../properties-calculator/properties-calculator.service';
+import { GameClass, gameClasses } from './character.consts';
+import { CreateCharacterDto } from './dto/create-character.dto';
 import { Repository } from 'typeorm';
-import { CharacterController } from './character.controller';
 
-export type MockType<T> = {
-  [P in keyof T]?: jest.Mock<{}>;
-};
-const repositoryMockFactory: () => MockType<Repository<any>> = jest.fn(() => ({
-  findOne: jest.fn((entity) => entity),
-}));
 describe('CharacterService', () => {
-  let characterService: CharacterService;
-  let characterRepository: MockType<Repository<Character>>;
-
-  let characterToken = getRepositoryToken(Character);
+  let service: CharacterService;
+  let mockRepository: Partial<Record<keyof Repository<Character>, jest.Mock>>;
+  let mockPropertiesCalculator: Partial<
+    Record<keyof PropertiesCalculatorService, jest.Mock>
+  >;
 
   beforeEach(async () => {
+    mockRepository = {
+      create: jest.fn(),
+      save: jest.fn(),
+      find: jest.fn(),
+      findOne: jest.fn(),
+    };
+
+    mockPropertiesCalculator = {
+      calculate: jest.fn(),
+      requiredSouls: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CharacterService,
+        PropertiesCalculatorService,
         {
-          provide: characterToken,
-          useFactory: repositoryMockFactory,
+          provide: getRepositoryToken(Character),
+          useValue: mockRepository,
+        },
+        {
+          provide: PropertiesCalculatorService,
+          useValue: mockPropertiesCalculator,
         },
       ],
     }).compile();
 
-    characterService = module.get<CharacterService>(CharacterService);
-    characterRepository =
-      module.get<MockType<Repository<Character>>>(characterToken);
+    service = module.get<CharacterService>(CharacterService);
   });
 
   it('should be defined', () => {
-    // expect(service).toBeDefined();
+    expect(service).toBeDefined();
   });
 
-  // describe('getAvailableLevels', () => {
-  //   it('should throw NotFoundException when character is not found', async () => {
-  //     jest.spyOn(repository, 'findOne').mockResolvedValue(null);
-  //     await expect(service.getAvailableLevels(1)).rejects.toThrow(
-  //       NotFoundException,
-  //     );
-  //   });
+  it('should create character', async () => {
+    const gameClass: GameClass = 'warrior' as GameClass;
+    const createCharacterDto: CreateCharacterDto = {
+      name: 'Test Character',
+      origin: 'Test Origin',
+    };
 
-  //   it('should throw NotFoundException when character has incomplete data', async () => {
-  //     jest
-  //       .spyOn(repository, 'findOne')
-  //       .mockResolvedValue({ id: 1 } as Character);
-  //     await expect(service.getAvailableLevels(1)).rejects.toThrow(
-  //       NotFoundException,
-  //     );
-  //   });
+    const expectedCharacterData = {
+      description: {
+        name: createCharacterDto.name,
+        origin: createCharacterDto.origin,
+        game_class: gameClass,
+      },
+      characteristics: gameClasses[gameClass].characteristics,
+      equipment: gameClasses[gameClass].equipment,
+    };
 
-  //   it('should return 0 levels when souls is 0', async () => {
-  //     jest.spyOn(repository, 'findOne').mockResolvedValue({
-  //       id: 1,
-  //       equipment: { souls: 0 },
-  //       characteristics: { level: 1 },
-  //     } as Character);
-  //     expect(await service.getAvailableLevels(1)).toBe(0);
-  //   });
+    const createdCharacter = { id: 1, ...expectedCharacterData };
+    mockRepository.create.mockReturnValue(createdCharacter);
+    mockRepository.save.mockResolvedValue(createdCharacter);
 
-  //   it('should calculate levels correctly for low levels (1-11)', async () => {
-  //     jest.spyOn(repository, 'findOne').mockResolvedValue({
-  //       id: 1,
-  //       equipment: { souls: 2000 },
-  //       characteristics: { level: 1 },
-  //     } as Character);
-  //     expect(await service.getAvailableLevels(1)).toBe(3);
-  //   });
+    const result = await service.create(gameClass, createCharacterDto);
 
-  //   it('should calculate levels correctly for higher levels (12+)', async () => {
-  //     jest.spyOn(repository, 'findOne').mockResolvedValue({
-  //       id: 1,
-  //       equipment: { souls: 20000 },
-  //       characteristics: { level: 15 },
-  //     } as Character);
-  //     expect(await service.getAvailableLevels(1)).toBe(5);
-  //   });
+    expect(mockRepository.create).toHaveBeenCalledWith(expectedCharacterData);
+    expect(mockRepository.save).toHaveBeenCalledWith(createdCharacter);
+    expect(result).toEqual(createdCharacter);
+  });
 
-  //   it('should handle transition from low to high levels', async () => {
-  //     jest.spyOn(repository, 'findOne').mockResolvedValue({
-  //       id: 1,
-  //       equipment: { souls: 10000 },
-  //       characteristics: { level: 10 },
-  //     } as Character);
-  //     expect(await service.getAvailableLevels(1)).toBe(4);
-  //   });
-  // });
+  it('should return all characters with mapped descriptions', async () => {
+    const mockCharacters = [
+      {
+        id: 1,
+        description: {
+          name: 'Character 1',
+          origin: 'Origin 1',
+          game_class: 'Warrior',
+        },
+      },
+      {
+        id: 2,
+        description: {
+          name: 'Character 2',
+          origin: 'Origin 2',
+          game_class: 'Mage',
+        },
+      },
+    ];
+
+    mockRepository.find.mockResolvedValue(mockCharacters);
+
+    const result = await service.findAll();
+
+    expect(mockRepository.find).toHaveBeenCalledWith({
+      relations: { description: true },
+    });
+    expect(result).toEqual([
+      { id: 1, name: 'Character 1', origin: 'Origin 1', game_class: 'Warrior' },
+      { id: 2, name: 'Character 2', origin: 'Origin 2', game_class: 'Mage' },
+    ]);
+  });
+
+  it('should return a character with calculated properties', async () => {
+    const mockCharacter = {
+      id: 1,
+      description: { name: 'Test Character' },
+      characteristics: { strength: 10 },
+      equipment: {
+        helmet: { name: 'Test Helmet' },
+        armor: { name: 'Test Armor' },
+        arms: { name: 'Test Arms' },
+        legs: { name: 'Test Legs' },
+        ring1: { name: 'Test Ring 1' },
+        ring2: { name: 'Test Ring 2' },
+        left_weapon_primary: { name: 'Test Left Weapon' },
+        right_weapon_primary: { name: 'Test Right Weapon' },
+        left_weapon_secondary: { name: 'Test Left Secondary' },
+        right_weapon_secondary: { name: 'Test Right Secondary' },
+      },
+    };
+
+    const mockProperties = { health: 100, stamina: 100 };
+
+    mockRepository.findOne.mockResolvedValue(mockCharacter);
+    mockPropertiesCalculator.calculate.mockReturnValue(mockProperties);
+
+    const result = await service.findOne(1);
+
+    expect(mockRepository.findOne).toHaveBeenCalledWith({
+      where: { id: 1 },
+      relations: {
+        description: true,
+        characteristics: true,
+        equipment: {
+          helmet: true,
+          armor: true,
+          arms: true,
+          legs: true,
+          ring1: true,
+          ring2: true,
+          left_weapon_primary: true,
+          right_weapon_primary: true,
+          left_weapon_secondary: true,
+          right_weapon_secondary: true,
+        },
+      },
+    });
+    expect(mockPropertiesCalculator.calculate).toHaveBeenCalledWith(
+      mockCharacter,
+    );
+    expect(result).toEqual({ ...mockCharacter, properties: mockProperties });
+  });
+
+  it('should correctly convert souls to levels', async () => {
+    const mockCharacter = {
+      equipment: { souls: 3300 },
+      characteristics: { level: 10 },
+    };
+
+    mockRepository.findOne.mockResolvedValue(mockCharacter);
+    mockPropertiesCalculator.requiredSouls
+      .mockReturnValueOnce(1000)
+      .mockReturnValueOnce(1100)
+      .mockReturnValueOnce(1200)
+      .mockReturnValueOnce(1300)
+      .mockReturnValueOnce(1400);
+
+    const result = await service.getAvailableLevels(1);
+    expect(result).toBe(3);
+  });
+
+  it('should return 0 if no souls', async () => {
+    const character = {
+      equipment: { souls: 0 },
+      characteristics: { level: 10 },
+    };
+
+    mockPropertiesCalculator.requiredSouls.mockReturnValueOnce(1000);
+    mockRepository.findOne.mockResolvedValue(character);
+
+    const result = await service.getAvailableLevels(1);
+    expect(result).toBe(0);
+  });
 });

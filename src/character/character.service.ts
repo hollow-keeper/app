@@ -108,12 +108,10 @@ export class CharacterService {
       character.characteristics.level + levels,
     );
 
-    while (soulsLeft > soulsNeeded) {
+    while (soulsLeft >= soulsNeeded) {
       soulsLeft -= soulsNeeded;
-
       levels++;
 
-      // extract to calc service
       soulsNeeded = this.propertiesCalculator.requiredSouls(
         character.characteristics.level + levels,
       );
