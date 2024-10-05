@@ -31,10 +31,10 @@ export class CharacterService {
     const { equipment, characteristics } = gameClasses[gameClass];
 
     // NOTE:
-    //check if item actually exist?
-    //got db err (FK constr) when generate char
-    //with default weapon
-    //after dropping all tables
+    // check if item actually exist?
+    // got db err (FK constr) when generate char
+    // with default weapon
+    // after dropping all tables
 
     const char = this.repository.create({
       description: {

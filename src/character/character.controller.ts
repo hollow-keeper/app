@@ -42,7 +42,7 @@ export class CharacterController {
   }
 
   @Get(':id')
-  @ApiNotFoundResponse({ description: 'Charachter with ID wasnt found' })
+  @ApiNotFoundResponse({ description: 'Charachter with ID not found' })
   findOne(
     @Param(
       'id',
