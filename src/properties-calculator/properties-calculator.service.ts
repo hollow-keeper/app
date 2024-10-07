@@ -383,6 +383,7 @@ export class PropertiesCalculatorService {
       rollCost: this.rollCost(characteristics, equipment),
       rollTime: this.rollTime(characteristics, equipment),
       requiredSouls: this.requiredSouls(characteristics.level),
+      loaded: this.weight(equipment),
     };
   }
 }

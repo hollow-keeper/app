@@ -21,6 +21,17 @@ function toDice(value: number): TDiceType {
   }
   return 'd20';
 }
+function healthToPoints(health: number) {
+  return Math.floor(health / 19);
+}
+
+function staminaToPoints(stamina: number) {
+  return Math.floor(stamina / 1.6);
+}
+
+export function protectionToPoints(protection: number) {
+  return Math.floor(protection / 5.42);
+}
 
 export class CharacterStatsAdapter {
   get name(): string {
@@ -68,54 +79,102 @@ export class CharacterStatsAdapter {
   get humanity(): string {
     return this.character.equipment.humanity.toString();
   }
-  /*
 
   get health(): string {
-    return `${this.character.health}(${this.character.healthPoints} points)`;
+    return `${this.character.properties.health}(${healthToPoints(this.character.properties.health)} points)`;
   }
   get stamina(): string {
-    return `${this.character.stamina}(${this.character.staminaPoints} points)`;
+    return `${this.character.properties.stamina}(${staminaToPoints(this.character.properties.stamina)} points)`;
   }
+
+  get staminaRecoveryRate(): string {
+    return this.character.properties.staminaRecoveryRate.toString();
+  }
+
   get loading(): string {
-    return `${this.character.loaded.toFixed(
-      1
-    )}/${this.character.carryingCapacity.toFixed(1)}`;
+    return `${this.character.properties.loaded.toFixed(
+      1,
+    )}/${this.character.properties.carryingCapacity.toFixed(1)}`;
+  }
+
+  get balanceRecoveryRate(): string {
+    return this.character.properties.balanceRecoveryRate.toString();
+  }
+
+  get stepLength(): string {
+    return this.character.properties.stepLength.toString();
+  }
+
+  get runLength(): string {
+    return this.character.properties.runLength.toString();
+  }
+
+  get runCost(): string {
+    return this.character.properties.runCost.toString();
+  }
+
+  get dodgeChance(): string {
+    return this.character.properties.dodgeChance.toString();
+  }
+
+  get rollLength(): string {
+    return this.character.properties.rollLength.toString();
+  }
+
+  get rollSpeed(): string {
+    return this.character.properties.rollTime.toString();
+  }
+
+  get rollCost(): string {
+    return this.character.properties.rollCost.toString();
+  }
+
+  get requiredSouls(): string {
+    return this.character.properties.requiredSouls.toString();
+  }
+  //TODO: implement damage
+  get rightHand1Damage(): string {
+    return '0';
+    // return this.character.rightHand1Damage.toString();
+  }
+
+  get rightHand2Damage(): string {
+    return '0';
+    //return this.character.rightHand2Damage.toString();
   }
 
   get leftHand1Damage(): string {
-    return this.character.leftHand1Damage.toString();
+    return '0';
+    //return this.character.leftHand1Damage.toString();
   }
+
   get leftHand2Damage(): string {
-    return this.character.leftHand2Damage.toString();
-  }
-  get rightHand1Damage(): string {
-    return this.character.rightHand1Damage.toString();
-  }
-  get rightHand2Damage(): string {
-    return this.character.rightHand2Damage.toString();
+    return '0';
+    //return this.character.leftHand2Damage.toString();
   }
 
   get physicalProtection(): string {
-    return `${this.character.physicalProtection}(${this.character.unarmoredPhysicalProtection})(${this.character.physicalProtectionPoints} points)`;
+    return `${this.character.properties.physicalProtection}(${this.character.properties.unarmoredPhysicalProtection})(${protectionToPoints(this.character.properties.physicalProtection)} points)`;
   }
   get crushProtection(): string {
-    return `${this.character.crushProtection}()(${this.character.crushProtectionPoints} points)`;
+    return `${this.character.properties.crushProtection}()(${protectionToPoints(this.character.properties.crushProtection)} points)`;
   }
   get slashProtection(): string {
-    return `${this.character.slashProtection}()(${this.character.slashProtectionPoints} points)`;
+    return `${this.character.properties.slashProtection}()(${protectionToPoints(this.character.properties.slashProtection)} points)`;
   }
   get pierceProtection(): string {
-    return `${this.character.pierceProtection}()(${this.character.pierceProtectionPoints} points)`;
+    return `${this.character.properties.pierceProtection}()(${protectionToPoints(this.character.properties.pierceProtection)} points)`;
   }
   get magicalProtection(): string {
-    return `${this.character.magicalProtection}(${this.character.unarmoredMagicalProtection})(${this.character.magicalProtectionPoints} points)`;
+    return `${this.character.properties.magicalProtection}(${this.character.properties.unarmoredMagicalProtection})(${protectionToPoints(this.character.properties.magicalProtection)} points)`;
   }
   get flameProtection(): string {
-    return `${this.character.flameProtection}(${this.character.unarmoredFlameProtection})(${this.character.flameProtectionPoints} points)`;
+    return `${this.character.properties.flameProtection}(${this.character.properties.unarmoredFlameProtection})(${protectionToPoints(this.character.properties.flameProtection)} points)`;
   }
   get flashProtection(): string {
-    return `${this.character.flashProtection}(${this.character.unarmoredFlashProtection})(${this.character.flashProtectionPoints} points)`;
+    return `${this.character.properties.flashProtection}(${this.character.properties.unarmoredFlashProtection})(${protectionToPoints(this.character.properties.flashProtection)} points)`;
   }
+  /*
 
   get balance(): string {
     return `${this.character.balance}(${this.character.balancePoints} points)`;
@@ -154,46 +213,6 @@ export class CharacterStatsAdapter {
       key: name,
       value: count.toString(),
     }));
-  }
-
-  get staminaRecoveryRate(): string {
-    return this.character.staminaRecoveryRate.toString();
-  }
-
-  get balanceRecoveryRate(): string {
-    return this.character.balanceRecoveryRate.toString();
-  }
-
-  get stepLength(): string {
-    return this.character.stepLength.toString();
-  }
-
-  get runLength(): string {
-    return this.character.runLength.toString();
-  }
-
-  get runCost(): string {
-    return this.character.runCost.toString();
-  }
-
-  get dodgeChance(): string {
-    return this.character.dodgeChance;
-  }
-
-  get rollLength(): string {
-    return this.character.rollLength.toString();
-  }
-
-  get rollSpeed(): string {
-    return this.character.rollSpeed.toString();
-  }
-
-  get rollCost(): string {
-    return this.character.rollCost.toString();
-  }
-
-  get requiredSouls(): string {
-    return this.character.requiredSouls.toString();
   }
 */
   constructor(private character: Character & { properties: IProperties }) {}

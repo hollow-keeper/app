@@ -44,7 +44,6 @@ export class CharacterStatsPrinter {
       this.getHumanitySector(),
     ];
   }
-  /*
   private getMainPropsSector() {
     return [
       { key: 'Здоровье', value: this.character.health },
@@ -68,7 +67,6 @@ export class CharacterStatsPrinter {
       { key: 'Душ до следующего уровня', value: this.character.requiredSouls },
     ];
   }
-
   private getDamageProp() {
     return [
       { key: 'Пр. оружие 1', value: this.character.rightHand1Damage },
@@ -97,6 +95,7 @@ export class CharacterStatsPrinter {
       this.getProtectionProp(),
     ];
   }
+  /*
 
   private getResistanceSector() {
     return [
@@ -139,7 +138,10 @@ export class CharacterStatsPrinter {
 */
   print() {
     return page(
-      [this.getFirstColumn() /*this.getSecondColumn(), this.getThirdColumn()*/],
+      [
+        this.getFirstColumn(),
+        this.getSecondColumn() /* this.getThirdColumn()*/,
+      ],
       this.length,
     );
   }

@@ -32,4 +32,5 @@ export interface IProperties {
   rollCost: number;
   rollTime: number;
   requiredSouls: number;
+  loaded: number;
 }
