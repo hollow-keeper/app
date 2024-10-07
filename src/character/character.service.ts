@@ -174,4 +174,8 @@ export class CharacterService {
 
     return this.repository.delete({ id });
   }
+
+  printCharacterSheet(id: number, length: number) {
+    return `${id}: ${length}`;
+  }
 }

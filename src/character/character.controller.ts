@@ -8,6 +8,8 @@ import {
   Delete,
   ParseIntPipe,
   HttpStatus,
+  Header,
+  Query,
 } from '@nestjs/common';
 import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
@@ -51,6 +53,21 @@ export class CharacterController {
     id: number,
   ) {
     return this.characterService.findOne(id);
+  }
+
+  @Get(':id/sheet')
+  @Header('Content-Type', 'text/plain')
+  @ApiNotFoundResponse({ description: 'Charachter with ID not found' })
+  printCharacterSheet(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+    @Query('length', ParseIntPipe)
+    length: number = 100,
+  ) {
+    return this.characterService.printCharacterSheet(id, length);
   }
 
   @Get(':id/available-levels')
