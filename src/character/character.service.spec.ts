@@ -6,6 +6,8 @@ import { PropertiesCalculatorService } from '../properties-calculator/properties
 import { GameClass, gameClasses } from './character.consts';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { Repository } from 'typeorm';
+import { CharacterPrinterService } from '../character-printer/character-printer.service';
+import { ItemService } from '../item/item.service';
 
 describe('CharacterService', () => {
   let service: CharacterService;
@@ -13,6 +15,10 @@ describe('CharacterService', () => {
   let mockPropertiesCalculator: Partial<
     Record<keyof PropertiesCalculatorService, jest.Mock>
   >;
+  let mockCharacterPrinterService: Partial<
+    Record<keyof CharacterPrinterService, jest.Mock>
+  >;
+  let mockItemService: Partial<Record<keyof ItemService, jest.Mock>>;
 
   beforeEach(async () => {
     mockRepository = {
@@ -27,6 +33,10 @@ describe('CharacterService', () => {
       requiredSouls: jest.fn(),
     };
 
+    mockItemService = {
+      findByName: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CharacterService,
@@ -38,6 +48,14 @@ describe('CharacterService', () => {
         {
           provide: PropertiesCalculatorService,
           useValue: mockPropertiesCalculator,
+        },
+        {
+          provide: CharacterPrinterService,
+          useValue: mockCharacterPrinterService,
+        },
+        {
+          provide: ItemService,
+          useValue: mockItemService,
         },
       ],
     }).compile();
@@ -63,7 +81,11 @@ describe('CharacterService', () => {
         game_class: gameClass,
       },
       characteristics: gameClasses[gameClass].characteristics,
-      equipment: gameClasses[gameClass].equipment,
+      equipment: {
+        humanity: 0,
+        right_weapon_primary: undefined,
+        souls: 0,
+      },
     };
 
     const createdCharacter = { id: 1, ...expectedCharacterData };

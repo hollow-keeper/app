@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import { PropertiesCalculatorService } from '../properties-calculator/properties-calculator.service';
 import { Character } from '../character/entities/character.entity';
 import { Item } from '../item/entities/item.entity';
+import { CharacterPrinterService } from '../character-printer/character-printer.service';
 
 describe('EquipmentController', () => {
   let controller: EquipmentController;
@@ -21,6 +22,9 @@ describe('EquipmentController', () => {
   let mockItemRepository: Partial<Record<keyof Repository<Item>, jest.Mock>>;
   let mockPropertiesCalculator: Partial<
     Record<keyof PropertiesCalculatorService, jest.Mock>
+  >;
+  let mockCharacterPrinterService: Partial<
+    Record<keyof CharacterPrinterService, jest.Mock>
   >;
 
   beforeEach(async () => {
@@ -67,6 +71,10 @@ describe('EquipmentController', () => {
         {
           provide: PropertiesCalculatorService,
           useValue: mockPropertiesCalculator,
+        },
+        {
+          provide: CharacterPrinterService,
+          useValue: mockCharacterPrinterService,
         },
       ],
     }).compile();

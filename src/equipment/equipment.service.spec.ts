@@ -8,6 +8,7 @@ import { CharacterService } from '../character/character.service';
 import { ItemService } from '../item/item.service';
 import { PropertiesCalculatorService } from '../properties-calculator/properties-calculator.service';
 import { Item } from '../item/entities/item.entity';
+import { CharacterPrinterService } from '../character-printer/character-printer.service';
 
 describe('EquipmentService', () => {
   let service: EquipmentService;
@@ -22,6 +23,9 @@ describe('EquipmentService', () => {
     Record<keyof Repository<Character>, jest.Mock>
   >;
   let mockItemRepository: Partial<Record<keyof Repository<Item>, jest.Mock>>;
+  let mockCharacterPrinterService: Partial<
+    Record<keyof CharacterPrinterService, jest.Mock>
+  >;
 
   beforeEach(async () => {
     mockEquipmentRepository = {
@@ -67,6 +71,10 @@ describe('EquipmentService', () => {
         {
           provide: getRepositoryToken(Item),
           useValue: mockItemRepository,
+        },
+        {
+          provide: CharacterPrinterService,
+          useValue: mockCharacterPrinterService,
         },
       ],
     }).compile();

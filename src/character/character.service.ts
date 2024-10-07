@@ -11,9 +11,9 @@ import { Repository } from 'typeorm';
 import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
 import { GameClass, gameClasses } from './character.consts';
 import { PropertiesCalculatorService } from '../properties-calculator/properties-calculator.service';
-import { CharacterPrinterService } from 'src/character-printer/character-printer.service';
-import { Equipment } from 'src/equipment/entities/equipment.entity';
-import { ItemService } from 'src/item/item.service';
+import { CharacterPrinterService } from '../character-printer/character-printer.service';
+import { Equipment } from '../equipment/entities/equipment.entity';
+import { ItemService } from '../item/item.service';
 
 const calcTotalCharacteristics = (characteristics: UpdateCharacteristicsDto) =>
   Object.values(characteristics).reduce((acc, val) => (acc += val));
