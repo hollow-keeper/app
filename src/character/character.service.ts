@@ -11,6 +11,7 @@ import { Repository } from 'typeorm';
 import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
 import { GameClass, gameClasses } from './character.consts';
 import { PropertiesCalculatorService } from '../properties-calculator/properties-calculator.service';
+import { CharacterPrinterService } from 'src/character-printer/character-printer.service';
 
 const calcTotalCharacteristics = (characteristics: UpdateCharacteristicsDto) =>
   Object.values(characteristics).reduce((acc, val) => (acc += val));
@@ -23,6 +24,7 @@ export class CharacterService {
     @InjectRepository(Character)
     private repository: Repository<Character>,
     private propertiesCalculator: PropertiesCalculatorService,
+    private printService: CharacterPrinterService,
   ) {}
 
   create(gameClass: GameClass, { name, origin }: CreateCharacterDto) {
@@ -173,5 +175,10 @@ export class CharacterService {
     this.logger.log('remove() has been invoked');
 
     return this.repository.delete({ id });
+  }
+
+  async printCharacterSheet(id: number, length: number) {
+    const character = await this.findOne(id);
+    return this.printService.print(character, length);
   }
 }
