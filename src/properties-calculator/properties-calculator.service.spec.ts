@@ -124,6 +124,7 @@ describe('PropertiesCalculatorService', () => {
       rollCost: 8,
       rollTime: 1,
       requiredSouls: 724,
+      loaded: 2,
     });
   });
 

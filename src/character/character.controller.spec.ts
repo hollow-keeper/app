@@ -5,6 +5,8 @@ import { PropertiesCalculatorService } from '../properties-calculator/properties
 import { Repository } from 'typeorm';
 import { Character } from './entities/character.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { CharacterPrinterService } from '../character-printer/character-printer.service';
+import { ItemService } from '../item/item.service';
 
 describe('CharacterController', () => {
   let controller: CharacterController;
@@ -12,6 +14,10 @@ describe('CharacterController', () => {
   let mockPropertiesCalculator: Partial<
     Record<keyof PropertiesCalculatorService, jest.Mock>
   >;
+  let mockCharacterPrinterService: Partial<
+    Record<keyof CharacterPrinterService, jest.Mock>
+  >;
+  let mockItemService: Partial<Record<keyof ItemService, jest.Mock>>;
 
   beforeEach(async () => {
     mockRepository = {
@@ -32,6 +38,14 @@ describe('CharacterController', () => {
         {
           provide: PropertiesCalculatorService,
           useValue: mockPropertiesCalculator,
+        },
+        {
+          provide: CharacterPrinterService,
+          useValue: mockCharacterPrinterService,
+        },
+        {
+          provide: ItemService,
+          useValue: mockItemService,
         },
       ],
     }).compile();
