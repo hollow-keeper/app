@@ -13,7 +13,6 @@ export class CharacterStatsPrinter {
   private getLevelAndSoulsSector() {
     return [
       { key: 'Уровень', value: this.character.level },
-      { key: 'Души', value: this.character.souls },
     ];
   }
 
@@ -32,16 +31,11 @@ export class CharacterStatsPrinter {
     ];
   }
 
-  private getHumanitySector() {
-    return [{ key: 'Человечность', value: this.character.humanity }];
-  }
-
   private getFirstColumn() {
     return [
       this.getNameSector(),
       this.getLevelAndSoulsSector(),
       this.getCharacteristicsSector(),
-      this.getHumanitySector(),
     ];
   }
   private getMainPropsSector() {
@@ -117,21 +111,10 @@ export class CharacterStatsPrinter {
     ];
   }
 
-  private getMagicSector() {
-    return [
-      { key: 'Ячеек магии', value: this.character.spellSlots },
-      ...this.character.spells.map(({ key, value }) => ({
-        key: `   ${key}`,
-        value,
-      })),
-    ];
-  }
-
   private getThirdColumn() {
     return [
       this.getResistanceSector(),
       this.getUnfightPropsSector(),
-      this.getMagicSector(),
     ];
   }
 

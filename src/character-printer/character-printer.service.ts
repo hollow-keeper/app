@@ -5,6 +5,7 @@ import {
 } from './character-stats';
 import { Character } from 'src/character/entities/character.entity';
 import { IProperties } from 'src/properties-calculator/properties-calculator.types';
+import { CharacterEquipAdapter, CharacterEquipPrinter } from './character-equip';
 
 @Injectable()
 export class CharacterPrinterService {
@@ -14,6 +15,11 @@ export class CharacterPrinterService {
       characterStatAdapter,
       length,
     );
-    return `${characterStatsPrinter.print()}`;
+    const characterEquipAdapter = new CharacterEquipAdapter(character);
+    const characterEquipPrinter = new CharacterEquipPrinter(
+        characterEquipAdapter,
+      length,
+    );
+    return characterStatsPrinter.print() + '\n' + characterEquipPrinter.print();
   }
 }

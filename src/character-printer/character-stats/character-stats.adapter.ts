@@ -53,9 +53,6 @@ export class CharacterStatsAdapter {
   get level(): string {
     return this.character.characteristics.level.toString();
   }
-  get souls(): string {
-    return this.character.equipment.souls.toString();
-  }
 
   get vitality(): string {
     return `${this.character.characteristics.vitality}(${toDice(this.character.characteristics.vitality)})`;
@@ -86,10 +83,6 @@ export class CharacterStatsAdapter {
   }
   get charisma(): string {
     return `${this.character.characteristics.charisma}(${toDice(this.character.characteristics.charisma)})`;
-  }
-
-  get humanity(): string {
-    return this.character.equipment.humanity.toString();
   }
 
   get health(): string {
@@ -214,22 +207,6 @@ export class CharacterStatsAdapter {
   }
   get luck(): string {
     return `${this.character.properties.luck}(${luckToPercentage(this.character.properties.luck)}%)`;
-  }
-
-  get spellSlots(): string {
-    return this.character.properties.spellSlots.toString();
-  }
-  //TODO: use spells
-  get spells(): {
-    key: string;
-    value: string;
-  }[] {
-    return []; /*
-    this.character.equipment.spells.map(({ name, count }) => ({
-      key: name,
-      value: count.toString(),
-    }));
-  */
   }
 
   constructor(private character: Character & { properties: IProperties }) {}
