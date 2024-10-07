@@ -177,7 +177,8 @@ export class CharacterService {
     return this.repository.delete({ id });
   }
 
-  printCharacterSheet(id: number, length: number) {
-    return `${id}: ${length}`;
+  async printCharacterSheet(id: number, length: number) {
+    const character = await this.findOne(id);
+    return this.printService.print(character, length);
   }
 }
