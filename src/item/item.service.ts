@@ -32,6 +32,14 @@ export class ItemService {
     return this.repository.find();
   }
 
+  async findByName(name: string) {
+    this.logger.log('findByName() has been invoked');
+
+    return this.repository.findOneBy({
+      name,
+    });
+  }
+
   async findOne(id: number) {
     this.logger.log(`findOne() has been invoked with id: ${id}`);
 
