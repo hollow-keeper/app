@@ -20,7 +20,7 @@
     "typeorm": "typeorm-ts-node-commonjs -d src/datasource.ts",
     "migrate": "yarn typeorm migration:run",
     "migration:generate": "bash ./generate-migration.sh",
-    "migration:create": "yarn typeorm migration:create",
+    "migration:create": "yarn ypeorm-ts-node-commonjs migration:create",
     "migration:revert": "yarn typeorm migration:revert"
   },
   "dependencies": {
