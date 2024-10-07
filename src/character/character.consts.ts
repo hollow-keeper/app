@@ -56,7 +56,12 @@ export const gameClasses: GameClasses = {
   [GameClass.warrior]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      helmet: 'Hard Leather Boots',
+      armor: 'Hard Leather Armor',
+      arms: 'Hard Leather Gauntlets',
+      legs: 'Standart Helm',
+      left_weapon_primary: 'Heater Shield',
+      right_weapon_primary: 'Longsword',
     },
     characteristics: {
       level: 4,
