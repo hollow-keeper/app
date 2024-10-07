@@ -33,6 +33,18 @@ export function protectionToPoints(protection: number) {
   return Math.floor(protection / 5.42);
 }
 
+export function balanceToBalancePoints(balance: number) {
+  return Math.floor(balance / 1.21);
+}
+
+export function resistanceToPoints(resistance: number) {
+  return Math.floor(resistance / 3);
+}
+
+export function luckToPercentage(luck: number) {
+  return Math.floor(luck / 17);
+}
+
 export class CharacterStatsAdapter {
   get name(): string {
     return this.character.description.name;
@@ -174,46 +186,51 @@ export class CharacterStatsAdapter {
   get flashProtection(): string {
     return `${this.character.properties.flashProtection}(${this.character.properties.unarmoredFlashProtection})(${protectionToPoints(this.character.properties.flashProtection)} points)`;
   }
-  /*
 
   get balance(): string {
-    return `${this.character.balance}(${this.character.balancePoints} points)`;
+    return `${this.character.properties.balance}(${balanceToBalancePoints(this.character.properties.balance)} points)`;
   }
+
   get bleedingResistance(): string {
-    return `${this.character.bleedingResistance}(${this.character.bleedingResistancePoints} points)`;
+    return `${this.character.properties.bleedingResistance}(${resistanceToPoints(this.character.properties.bleedingResistance)} points)`;
   }
-  get poisionResistance(): string {
-    return `${this.character.poisionResistance}(${this.character.poisionResistancePoints} points)`;
+
+  get poisonResistance(): string {
+    return `${this.character.properties.poisonResistance}(${resistanceToPoints(this.character.properties.poisonResistance)} points)`;
   }
+
   get curseResistance(): string {
-    return `${this.character.curseResistance}(${this.character.curseResistancePoints} points)`;
+    return `${this.character.properties.curseResistance}(${resistanceToPoints(this.character.properties.curseResistance)} points)`;
   }
 
   get threat(): string {
-    return `${this.character.threat}(${this.character.threatDice})`;
+    return `${this.character.properties.threat}(${toDice(this.character.properties.threat)})`;
   }
   get eloquence(): string {
-    return `${this.character.eloquence}(${this.character.eloquenceDice})`;
+    return `${this.character.properties.eloquence}(${toDice(this.character.properties.eloquence)})`;
   }
   get attentiveness(): string {
-    return `${this.character.attentiveness}(${this.character.attentivenessDice})`;
+    return `${this.character.properties.attentiveness}(${toDice(this.character.properties.attentiveness)})`;
   }
   get luck(): string {
-    return `${this.character.luck}(${this.character.luckPercent}%)`;
+    return `${this.character.properties.luck}(${luckToPercentage(this.character.properties.luck)}%)`;
   }
 
   get spellSlots(): string {
-    return this.character.spellSlots.toString();
+    return this.character.properties.spellSlots.toString();
   }
+  //TODO: use spells
   get spells(): {
     key: string;
     value: string;
   }[] {
-    return this.character.spells.map(({ name, count }) => ({
+    return []; /*
+    this.character.equipment.spells.map(({ name, count }) => ({
       key: name,
       value: count.toString(),
     }));
+  */
   }
-*/
+
   constructor(private character: Character & { properties: IProperties }) {}
 }

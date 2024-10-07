@@ -95,7 +95,6 @@ export class CharacterStatsPrinter {
       this.getProtectionProp(),
     ];
   }
-  /*
 
   private getResistanceSector() {
     return [
@@ -104,7 +103,7 @@ export class CharacterStatsPrinter {
         key: 'Сопр. к кровотеч.',
         value: this.character.bleedingResistance,
       },
-      { key: 'Сопр. к отравлен.', value: this.character.poisionResistance },
+      { key: 'Сопр. к отравлен.', value: this.character.poisonResistance },
       { key: 'Сопр. к проклят.', value: this.character.curseResistance },
     ];
   }
@@ -135,13 +134,10 @@ export class CharacterStatsPrinter {
       this.getMagicSector(),
     ];
   }
-*/
+
   print() {
     return page(
-      [
-        this.getFirstColumn(),
-        this.getSecondColumn() /* this.getThirdColumn()*/,
-      ],
+      [this.getFirstColumn(), this.getSecondColumn(), this.getThirdColumn()],
       this.length,
     );
   }
