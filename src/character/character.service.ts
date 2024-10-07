@@ -12,6 +12,8 @@ import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
 import { GameClass, gameClasses } from './character.consts';
 import { PropertiesCalculatorService } from '../properties-calculator/properties-calculator.service';
 import { CharacterPrinterService } from 'src/character-printer/character-printer.service';
+import { Equipment } from 'src/equipment/entities/equipment.entity';
+import { ItemService } from 'src/item/item.service';
 
 const calcTotalCharacteristics = (characteristics: UpdateCharacteristicsDto) =>
   Object.values(characteristics).reduce((acc, val) => (acc += val));
@@ -25,12 +27,21 @@ export class CharacterService {
     private repository: Repository<Character>,
     private propertiesCalculator: PropertiesCalculatorService,
     private printService: CharacterPrinterService,
+    private itemService: ItemService,
   ) {}
 
-  create(gameClass: GameClass, { name, origin }: CreateCharacterDto) {
+  async create(gameClass: GameClass, { name, origin }: CreateCharacterDto) {
     this.logger.log('create() has been invoked');
 
     const { equipment, characteristics } = gameClasses[gameClass];
+
+    const realEquipment = new Equipment();
+
+    for (const key in equipment) {
+      if (equipment[key]) {
+        realEquipment[key] = await this.itemService.findByName(equipment[key]);
+      }
+    }
 
     // NOTE:
     // check if item actually exist?
@@ -45,7 +56,7 @@ export class CharacterService {
         game_class: gameClass,
       },
       characteristics,
-      equipment,
+      equipment: realEquipment,
     });
 
     return this.repository.save(char);

@@ -17,7 +17,10 @@ export enum GameClass {
 export type GameClasses = {
   [key in GameClass]: {
     characteristics: Omit<Characteristics, 'id'>;
-    equipment: Omit<Equipment, 'id'>;
+    equipment: Record<
+      keyof Omit<Equipment, 'id' | 'souls' | 'humanity'>,
+      string | null
+    >;
   };
 };
 
@@ -32,8 +35,6 @@ const defaultEquipment = {
   right_weapon_primary: null,
   left_weapon_secondary: null,
   right_weapon_secondary: null,
-  souls: 0,
-  humanity: 0,
 };
 
 const weapon = {
@@ -55,7 +56,7 @@ export const gameClasses: GameClasses = {
   [GameClass.warrior]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon,
+      right_weapon_primary: weapon.name,
     },
     characteristics: {
       level: 4,
@@ -74,7 +75,7 @@ export const gameClasses: GameClasses = {
   [GameClass.knight]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon,
+      right_weapon_primary: weapon.name,
     },
     characteristics: {
       level: 5,
@@ -93,7 +94,7 @@ export const gameClasses: GameClasses = {
   [GameClass.wanderer]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon,
+      right_weapon_primary: weapon.name,
     },
     characteristics: {
       level: 3,
@@ -112,7 +113,7 @@ export const gameClasses: GameClasses = {
   [GameClass.thief]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon,
+      right_weapon_primary: weapon.name,
     },
     characteristics: {
       level: 5,
@@ -131,7 +132,7 @@ export const gameClasses: GameClasses = {
   [GameClass.bandit]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon,
+      right_weapon_primary: weapon.name,
     },
     characteristics: {
       level: 4,
@@ -150,7 +151,7 @@ export const gameClasses: GameClasses = {
   [GameClass.hunter]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon,
+      right_weapon_primary: weapon.name,
     },
     characteristics: {
       level: 4,
@@ -169,7 +170,7 @@ export const gameClasses: GameClasses = {
   [GameClass.sorcerer]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon,
+      right_weapon_primary: weapon.name,
     },
     characteristics: {
       level: 3,
@@ -188,7 +189,7 @@ export const gameClasses: GameClasses = {
   [GameClass.pyromancer]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon,
+      right_weapon_primary: weapon.name,
     },
     characteristics: {
       level: 1,
@@ -207,7 +208,7 @@ export const gameClasses: GameClasses = {
   [GameClass.cleric]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon,
+      right_weapon_primary: weapon.name,
     },
     characteristics: {
       level: 2,
@@ -226,7 +227,7 @@ export const gameClasses: GameClasses = {
   [GameClass.deprived]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon,
+      right_weapon_primary: weapon.name,
     },
     characteristics: {
       level: 6,
