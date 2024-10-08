@@ -16,6 +16,7 @@ describe('ItemService', () => {
       find: jest.fn(),
       findOne: jest.fn(),
       findOneBy: jest.fn(),
+      delete: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -125,7 +126,24 @@ describe('ItemService', () => {
       name: 'tttest',
     });
     expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
-    expect(mockRepository.save).toHaveBeenCalledWith({ ...item, name: 'tttest' });
+    expect(mockRepository.save).toHaveBeenCalledWith({
+      ...item,
+      name: 'tttest',
+    });
     expect(result).toEqual({ ...item, name: 'wrong' });
+  });
+
+  it('should remove item by id', async () => {
+    const item = {
+      name: 'Test Item',
+      weight: 1,
+      balance: 2,
+    };
+
+    mockRepository.delete.mockReturnValue(item);
+
+    const result = await service.remove(1);
+    expect(mockRepository.delete).toHaveBeenCalledWith({ id: 1 });
+    expect(result).toEqual(item);
   });
 });

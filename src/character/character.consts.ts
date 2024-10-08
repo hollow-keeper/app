@@ -225,7 +225,13 @@ export const gameClasses: GameClasses = {
   [GameClass.pyromancer]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Heavy Boots',
+      armor: 'Tattered Cloth Robe',
+      arms: 'Tattered Cloth Manchette',
+      helmet: 'Tattered Cloth Hood',
+      left_weapon_primary: 'Cracked Round Shield',
+      right_weapon_primary: 'Hand Axe',
+      right_weapon_secondary: 'Pyromancy Flame',
     },
     characteristics: {
       level: 1,
