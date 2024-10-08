@@ -176,7 +176,12 @@ export const gameClasses: GameClasses = {
   [GameClass.hunter]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Leather Boots',
+      armor: 'Leather Armor',
+      arms: 'Leather Gloves',
+      left_weapon_primary: 'Large Leather Shield',
+      right_weapon_primary: 'Shortsword',
+      right_weapon_secondary: 'Short Bow',
     },
     characteristics: {
       level: 4,
