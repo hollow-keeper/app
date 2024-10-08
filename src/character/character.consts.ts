@@ -80,7 +80,12 @@ export const gameClasses: GameClasses = {
   [GameClass.knight]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      helmet: 'Knight Leggings',
+      armor: 'Knight Armor',
+      arms: 'Knight Gauntlets',
+      legs: 'Knight Helm',
+      left_weapon_primary: 'Tower Kite Shield',
+      right_weapon_primary: 'Broadsword',
     },
     characteristics: {
       level: 5,
