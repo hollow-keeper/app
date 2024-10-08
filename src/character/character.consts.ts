@@ -104,7 +104,12 @@ export const gameClasses: GameClasses = {
   [GameClass.wanderer]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      helmet: 'Wanderer Boots',
+      armor: 'Wanderer Coat',
+      arms: 'Wanderer Manchette',
+      legs: 'Wanderer Hood',
+      left_weapon_primary: 'Leather Shield',
+      right_weapon_primary: 'Scimitar',
     },
     characteristics: {
       level: 3,
