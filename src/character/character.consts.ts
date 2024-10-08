@@ -56,10 +56,10 @@ export const gameClasses: GameClasses = {
   [GameClass.warrior]: {
     equipment: {
       ...defaultEquipment,
-      helmet: 'Hard Leather Boots',
+      legs: 'Hard Leather Boots',
       armor: 'Hard Leather Armor',
       arms: 'Hard Leather Gauntlets',
-      legs: 'Standart Helm',
+      helmet: 'Standart Helm',
       left_weapon_primary: 'Heater Shield',
       right_weapon_primary: 'Longsword',
     },
@@ -80,10 +80,10 @@ export const gameClasses: GameClasses = {
   [GameClass.knight]: {
     equipment: {
       ...defaultEquipment,
-      helmet: 'Knight Leggings',
+      legs: 'Knight Leggings',
       armor: 'Knight Armor',
       arms: 'Knight Gauntlets',
-      legs: 'Knight Helm',
+      helmet: 'Knight Helm',
       left_weapon_primary: 'Tower Kite Shield',
       right_weapon_primary: 'Broadsword',
     },
@@ -104,10 +104,10 @@ export const gameClasses: GameClasses = {
   [GameClass.wanderer]: {
     equipment: {
       ...defaultEquipment,
-      helmet: 'Wanderer Boots',
+      legs: 'Wanderer Boots',
       armor: 'Wanderer Coat',
       arms: 'Wanderer Manchette',
-      legs: 'Wanderer Hood',
+      helmet: 'Wanderer Hood',
       left_weapon_primary: 'Leather Shield',
       right_weapon_primary: 'Scimitar',
     },
@@ -128,7 +128,12 @@ export const gameClasses: GameClasses = {
   [GameClass.thief]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Black Leather Boots',
+      armor: 'Black Leather Armor',
+      arms: 'Black Leather Gloves',
+      helmet: 'Thief Mask',
+      left_weapon_primary: 'Target Shield',
+      right_weapon_primary: "Bandit's Knife",
     },
     characteristics: {
       level: 5,
