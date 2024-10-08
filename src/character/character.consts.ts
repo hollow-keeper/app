@@ -200,7 +200,13 @@ export const gameClasses: GameClasses = {
   [GameClass.sorcerer]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Sorcerer Boots',
+      armor: 'Sorcerer Cloak',
+      arms: 'Sorcerer Gauntlets',
+      helmet: 'Sorcerer Hat',
+      left_weapon_primary: 'Small Leather Shield',
+      right_weapon_primary: "Sorcerer's Catalyst",
+      right_weapon_secondary: 'Dagger',
     },
     characteristics: {
       level: 3,

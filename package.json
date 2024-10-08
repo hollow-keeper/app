@@ -80,7 +80,8 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
-      "/migrations/"
+      "/migrations/",
+      ".module.ts"
     ]
   }
 }
