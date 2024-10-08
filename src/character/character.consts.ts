@@ -152,7 +152,12 @@ export const gameClasses: GameClasses = {
   [GameClass.bandit]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Brigand Trousers',
+      armor: 'Brigand Armor',
+      arms: 'Brigand Gauntlets',
+      helmet: 'Brigand Hood',
+      left_weapon_primary: 'Spider Shield',
+      right_weapon_primary: 'Battle Axe',
     },
     characteristics: {
       level: 4,
