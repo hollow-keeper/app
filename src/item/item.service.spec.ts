@@ -95,11 +95,21 @@ describe('ItemService', () => {
     expect(result).toEqual(item);
   });
 
-  it('should throw exception', async () => {
+  it('should throw exception about empty repo while finding item by id', async () => {
     const emptyService = new ItemService(undefined as any);
     expect(() => emptyService.findOne(1)).rejects.toThrow(
       'Repository is not initialized',
     );
+  });
+
+  it('should return empty item while finding item by nullable id', async () => {
+    const result = await service.findOne(null);
+    expect(result).toBeNull();
+  });
+
+  it('should return empty item while finding item by undefined id', async () => {
+    const result = await service.findOne(undefined);
+    expect(result).toBeNull();
   });
 
   it('should find many items by ids', async () => {

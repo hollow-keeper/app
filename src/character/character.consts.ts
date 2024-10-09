@@ -274,7 +274,8 @@ export const gameClasses: GameClasses = {
   [GameClass.deprived]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      left_weapon_primary: 'Plank Shield',
+      right_weapon_primary: 'Club',
     },
     characteristics: {
       level: 6,
