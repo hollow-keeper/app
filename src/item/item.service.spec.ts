@@ -95,6 +95,13 @@ describe('ItemService', () => {
     expect(result).toEqual(item);
   });
 
+  it('should throw exception', async () => {
+    const emptyService = new ItemService(undefined as any);
+    expect(() => emptyService.findOne(1)).rejects.toThrow(
+      'Repository is not initialized',
+    );
+  });
+
   it('should find many items by ids', async () => {
     const item = {
       id: 1,

@@ -250,7 +250,12 @@ export const gameClasses: GameClasses = {
   [GameClass.cleric]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Holy Trousers',
+      armor: 'Holy Robe',
+      arms: 'Traveling Gloves',
+      helmet: "Priest's Hat",
+      left_weapon_primary: 'East-West Shield',
+      right_weapon_primary: 'Mace',
     },
     characteristics: {
       level: 2,
