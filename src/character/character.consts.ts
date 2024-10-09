@@ -56,7 +56,12 @@ export const gameClasses: GameClasses = {
   [GameClass.warrior]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Hard Leather Boots',
+      armor: 'Hard Leather Armor',
+      arms: 'Hard Leather Gauntlets',
+      helmet: 'Standart Helm',
+      left_weapon_primary: 'Heater Shield',
+      right_weapon_primary: 'Longsword',
     },
     characteristics: {
       level: 4,
@@ -75,7 +80,12 @@ export const gameClasses: GameClasses = {
   [GameClass.knight]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Knight Leggings',
+      armor: 'Knight Armor',
+      arms: 'Knight Gauntlets',
+      helmet: 'Knight Helm',
+      left_weapon_primary: 'Tower Kite Shield',
+      right_weapon_primary: 'Broadsword',
     },
     characteristics: {
       level: 5,
@@ -94,7 +104,12 @@ export const gameClasses: GameClasses = {
   [GameClass.wanderer]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Wanderer Boots',
+      armor: 'Wanderer Coat',
+      arms: 'Wanderer Manchette',
+      helmet: 'Wanderer Hood',
+      left_weapon_primary: 'Leather Shield',
+      right_weapon_primary: 'Scimitar',
     },
     characteristics: {
       level: 3,
@@ -113,7 +128,12 @@ export const gameClasses: GameClasses = {
   [GameClass.thief]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Black Leather Boots',
+      armor: 'Black Leather Armor',
+      arms: 'Black Leather Gloves',
+      helmet: 'Thief Mask',
+      left_weapon_primary: 'Target Shield',
+      right_weapon_primary: "Bandit's Knife",
     },
     characteristics: {
       level: 5,
@@ -132,7 +152,12 @@ export const gameClasses: GameClasses = {
   [GameClass.bandit]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Brigand Trousers',
+      armor: 'Brigand Armor',
+      arms: 'Brigand Gauntlets',
+      helmet: 'Brigand Hood',
+      left_weapon_primary: 'Spider Shield',
+      right_weapon_primary: 'Battle Axe',
     },
     characteristics: {
       level: 4,
@@ -151,7 +176,12 @@ export const gameClasses: GameClasses = {
   [GameClass.hunter]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Leather Boots',
+      armor: 'Leather Armor',
+      arms: 'Leather Gloves',
+      left_weapon_primary: 'Large Leather Shield',
+      right_weapon_primary: 'Shortsword',
+      right_weapon_secondary: 'Short Bow',
     },
     characteristics: {
       level: 4,
@@ -170,7 +200,13 @@ export const gameClasses: GameClasses = {
   [GameClass.sorcerer]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Sorcerer Boots',
+      armor: 'Sorcerer Cloak',
+      arms: 'Sorcerer Gauntlets',
+      helmet: 'Sorcerer Hat',
+      left_weapon_primary: 'Small Leather Shield',
+      right_weapon_primary: "Sorcerer's Catalyst",
+      right_weapon_secondary: 'Dagger',
     },
     characteristics: {
       level: 3,
@@ -189,7 +225,13 @@ export const gameClasses: GameClasses = {
   [GameClass.pyromancer]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Heavy Boots',
+      armor: 'Tattered Cloth Robe',
+      arms: 'Tattered Cloth Manchette',
+      helmet: 'Tattered Cloth Hood',
+      left_weapon_primary: 'Cracked Round Shield',
+      right_weapon_primary: 'Hand Axe',
+      right_weapon_secondary: 'Pyromancy Flame',
     },
     characteristics: {
       level: 1,
@@ -208,7 +250,12 @@ export const gameClasses: GameClasses = {
   [GameClass.cleric]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      legs: 'Holy Trousers',
+      armor: 'Holy Robe',
+      arms: 'Traveling Gloves',
+      helmet: "Priest's Hat",
+      left_weapon_primary: 'East-West Shield',
+      right_weapon_primary: 'Mace',
     },
     characteristics: {
       level: 2,
@@ -227,7 +274,8 @@ export const gameClasses: GameClasses = {
   [GameClass.deprived]: {
     equipment: {
       ...defaultEquipment,
-      right_weapon_primary: weapon.name,
+      left_weapon_primary: 'Plank Shield',
+      right_weapon_primary: 'Club',
     },
     characteristics: {
       level: 6,

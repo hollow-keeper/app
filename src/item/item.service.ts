@@ -72,8 +72,7 @@ export class ItemService {
     const itemMap = itemsList.reduce((acc, item) => {
       acc[item.id] = item;
       return acc;
-    });
-
+    }, {});
     for (let id of ids) {
       if (!itemMap[id]) {
         throw new NotFoundException(`Item with ID ${id} not found`);
