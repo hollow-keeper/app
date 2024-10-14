@@ -1,20 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { EquipmentService } from './equipment.service';
 import { Repository } from 'typeorm';
-import { Equipment } from './entities/equipment.entity';
+import { Equipment } from './entities';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Character } from '../character/entities/character.entity';
-import { CharacterService } from '../character/character.service';
-import { ItemService } from '../item/item.service';
-import { PropertiesCalculatorService } from '../properties-calculator/properties-calculator.service';
-import { Item } from '../item/entities/item.entity';
-import { CharacterPrinterService } from '../character-printer/character-printer.service';
+import { Character, CharacterService } from '../character';
+import { ItemService, Item } from '../item';
+import { PropertiesCalculatorService } from '../properties-calculator';
+import { CharacterPrinterService } from '../character-printer';
 
 describe('EquipmentService', () => {
   let service: EquipmentService;
-  let mockPropertiesCalculator: Partial<
-    Record<keyof PropertiesCalculatorService, jest.Mock>
-  >;
 
   let mockEquipmentRepository: Partial<
     Record<keyof Repository<Equipment>, jest.Mock>
@@ -47,11 +42,6 @@ describe('EquipmentService', () => {
       save: jest.fn(),
       find: jest.fn(),
       findOne: jest.fn(),
-    };
-
-    mockPropertiesCalculator = {
-      calculate: jest.fn(),
-      requiredSouls: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({

@@ -1,7 +1,7 @@
 import { Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Description } from './description.entity';
 import { Characteristics } from './characteristics.entity';
-import { Equipment } from '../../equipment';
+import { Equipment } from '../../equipment/entities';
 
 @Entity({ name: 'characters' })
 export class Character {

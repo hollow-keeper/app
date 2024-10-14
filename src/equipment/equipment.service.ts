@@ -1,11 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { UpdateEquipmentDto } from './dto/update-equipment.dto';
-import { Equipment } from './entities/equipment.entity';
+import { UpdateEquipmentDto } from './dto';
+import { Equipment } from './entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CharacterService } from '../character/character.service';
+import { CharacterService } from '../character';
 import { Hand } from './equipment.consts';
-import { ItemService } from '../item/item.service';
+import { ItemService } from '../item';
 
 @Injectable()
 export class EquipmentService {

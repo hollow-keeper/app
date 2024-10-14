@@ -142,6 +142,17 @@ describe('ItemService', () => {
     expect(result).toEqual({ '1': item });
   });
 
+  it('should find many items by ids but throw exception', async () => {
+    mockRepository.find.mockReturnValue([]);
+
+    expect(() => service.findMany([1])).rejects.toThrow(
+      'Item with ID 1 not found',
+    );
+    expect(mockRepository.find).toHaveBeenCalledWith({
+      where: { id: In([1]) },
+    });
+  });
+
   it('should update item by id', async () => {
     const item = {
       name: 'Test Item',

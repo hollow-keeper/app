@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { EquipmentService } from './equipment.service';
 import { EquipmentController } from './equipment.controller';
-import { CharacterModule } from 'src/character/character.module';
+import { CharacterModule } from '../character';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Equipment } from './entities/equipment.entity';
-import { ItemModule } from 'src/item/item.module';
+import { Equipment } from './entities';
+import { ItemModule } from '../item';
 
 @Module({
   imports: [ItemModule, CharacterModule, TypeOrmModule.forFeature([Equipment])],

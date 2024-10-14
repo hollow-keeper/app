@@ -8,9 +8,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { EquipmentService } from './equipment.service';
-import { UpdateEquipmentDto } from './dto/update-equipment.dto';
-import { UpdateHumanityDto } from './dto/update-humanity.dto';
-import { UpdateSoulsDto } from './dto/update-souls.dto';
+import { UpdateEquipmentDto, UpdateHumanityDto, UpdateSoulsDto } from './dto';
 import { ApiBadRequestResponse, ApiParam } from '@nestjs/swagger';
 import { Hand } from './equipment.consts';
 
