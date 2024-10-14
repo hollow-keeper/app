@@ -4,17 +4,17 @@ import {
   BadRequestException,
   Logger,
 } from '@nestjs/common';
-import { CreateCharacterDto } from './dto/create-character.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Character } from './entities/character.entity';
 import { Repository } from 'typeorm';
-import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
-import { GameClass, gameClasses } from './character.consts';
-import { PropertiesCalculatorService } from '../properties-calculator/properties-calculator.service';
-import { CharacterPrinterService } from '../character-printer/character-printer.service';
-import { Equipment } from '../equipment/entities/equipment.entity';
-import { ItemService } from '../item/item.service';
 
+import { GameClass, gameClasses } from './character.consts';
+import { CreateCharacterDto, UpdateCharacteristicsDto } from './dto';
+import { Character } from './entities';
+import { CharacterPrinterService } from '../character-printer';
+import { Equipment } from '../equipment/entities';
+import { ItemService } from '../item';
+import { PropertiesCalculatorService } from '../properties-calculator';
+//TODO: Fix circular deps with equip
 const calcTotalCharacteristics = (characteristics: UpdateCharacteristicsDto) =>
   Object.values(characteristics).reduce((acc, val) => (acc += val));
 
@@ -143,7 +143,7 @@ export class CharacterService {
       level,
       ...characteristicsExceptLevel
     } = character.characteristics;
-    let { souls } = character.equipment;
+    const { souls } = character.equipment;
 
     const nextSkillPoints = calcTotalCharacteristics(newCharacteristics);
 

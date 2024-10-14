@@ -4,11 +4,11 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateItemDto } from './dto/create-item.dto';
-import { UpdateItemDto } from './dto/update-item.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Item } from './entities/item.entity';
 import { In, Repository } from 'typeorm';
+
+import { CreateItemDto, UpdateItemDto } from './dto';
+import { Item } from './entities';
 
 @Injectable()
 export class ItemService {
@@ -73,7 +73,7 @@ export class ItemService {
       acc[item.id] = item;
       return acc;
     }, {});
-    for (let id of ids) {
+    for (const id of ids) {
       if (!itemMap[id]) {
         throw new NotFoundException(`Item with ID ${id} not found`);
       }

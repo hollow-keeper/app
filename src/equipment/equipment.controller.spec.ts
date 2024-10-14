@@ -1,15 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
 import { EquipmentController } from './equipment.controller';
 import { EquipmentService } from './equipment.service';
-import { CharacterService } from '../character/character.service';
-import { ItemService } from '../item/item.service';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { Equipment } from './entities/equipment.entity';
-import { Repository } from 'typeorm';
-import { PropertiesCalculatorService } from '../properties-calculator/properties-calculator.service';
-import { Character } from '../character/entities/character.entity';
-import { Item } from '../item/entities/item.entity';
-import { CharacterPrinterService } from '../character-printer/character-printer.service';
+import { Character, CharacterService } from '../character';
+import { CharacterPrinterService } from '../character-printer';
+import { ItemService, Item } from '../item';
+import { Equipment } from './entities';
+import { PropertiesCalculatorService } from '../properties-calculator';
 
 describe('EquipmentController', () => {
   let controller: EquipmentController;

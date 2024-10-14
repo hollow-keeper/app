@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { CharacterModule } from './character/character.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EquipmentModule } from './equipment/equipment.module';
-import { ItemModule } from './item/item.module';
+
+import { CharacterModule } from './character';
+import { EquipmentModule } from './equipment';
+import { ItemModule } from './item';
 
 @Module({
   imports: [

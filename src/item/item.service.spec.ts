@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ItemService } from './item.service';
-import { In, Repository } from 'typeorm';
-import { Item } from './entities/item.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CreateItemDto } from './dto/create-item.dto';
+import { In, Repository } from 'typeorm';
+
+import { CreateItemDto } from './dto';
+import { Item } from './entities';
+import { ItemService } from './item.service';
 
 describe('ItemService', () => {
   let service: ItemService;
@@ -112,6 +113,19 @@ describe('ItemService', () => {
     expect(result).toBeNull();
   });
 
+  it('should  throw exception while finding item by Nan id', async () => {
+    expect(() => service.findOne(NaN)).rejects.toThrow(
+      'Invalid id: id must be a positive integer',
+    );
+  });
+
+  it('should  throw exception while finding empty item', async () => {
+    mockRepository.findOneBy.mockReturnValue(undefined);
+    expect(() => service.findOne(1)).rejects.toThrow(
+      'Item with ID 1 not found',
+    );
+  });
+
   it('should find many items by ids', async () => {
     const item = {
       id: 1,
@@ -127,6 +141,17 @@ describe('ItemService', () => {
       where: { id: In([1]) },
     });
     expect(result).toEqual({ '1': item });
+  });
+
+  it('should find many items by ids but throw exception', async () => {
+    mockRepository.find.mockReturnValue([]);
+
+    expect(() => service.findMany([1])).rejects.toThrow(
+      'Item with ID 1 not found',
+    );
+    expect(mockRepository.find).toHaveBeenCalledWith({
+      where: { id: In([1]) },
+    });
   });
 
   it('should update item by id', async () => {

@@ -1,4 +1,3 @@
-import { Item } from '../../item/entities/item.entity';
 import {
   Column,
   Entity,
@@ -6,6 +5,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+
+import { Item } from '../../item';
 
 @Entity({ name: 'equipments' })
 export class Equipment {

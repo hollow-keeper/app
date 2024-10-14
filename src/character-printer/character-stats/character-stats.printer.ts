@@ -11,9 +11,7 @@ export class CharacterStatsPrinter {
   }
 
   private getLevelAndSoulsSector() {
-    return [
-      { key: 'Уровень', value: this.character.level },
-    ];
+    return [{ key: 'Уровень', value: this.character.level }];
   }
 
   private getCharacteristicsSector() {
@@ -112,10 +110,7 @@ export class CharacterStatsPrinter {
   }
 
   private getThirdColumn() {
-    return [
-      this.getResistanceSector(),
-      this.getUnfightPropsSector(),
-    ];
+    return [this.getResistanceSector(), this.getUnfightPropsSector()];
   }
 
   print() {

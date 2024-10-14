@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { PropertiesCalculatorService } from './properties-calculator.service';
-import { Character } from 'src/character/entities/character.entity';
-import { Characteristics } from 'src/character/entities/characteristics.entity';
-import { Equipment } from 'src/equipment/entities/equipment.entity';
+import { Character, Characteristics } from '../character';
+import { Equipment } from '../equipment';
 
 const defaultEquipment = {
   helmet: null,

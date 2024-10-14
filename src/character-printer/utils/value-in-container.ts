@@ -1,4 +1,4 @@
-import { horizontalSeparator } from "./horizontal-serparator";
+import { horizontalSeparator } from './horizontal-serparator';
 
 export function valueInContainer(value: string, length: number) {
   return `${horizontalSeparator(length)}

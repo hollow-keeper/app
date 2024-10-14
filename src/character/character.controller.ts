@@ -11,15 +11,15 @@ import {
   Header,
   Query,
 } from '@nestjs/common';
-import { CharacterService } from './character.service';
-import { CreateCharacterDto } from './dto/create-character.dto';
-import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
-import { GameClass } from './character.consts';
 import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
   ApiParam,
 } from '@nestjs/swagger';
+
+import { GameClass } from './character.consts';
+import { CharacterService } from './character.service';
+import { CreateCharacterDto, UpdateCharacteristicsDto } from './dto';
 
 @Controller('characters')
 export class CharacterController {
