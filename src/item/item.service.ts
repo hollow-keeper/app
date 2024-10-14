@@ -4,10 +4,9 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateItemDto } from './dto/create-item.dto';
-import { UpdateItemDto } from './dto/update-item.dto';
+import { CreateItemDto, UpdateItemDto } from './dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Item } from './entities/item.entity';
+import { Item } from './entities';
 import { In, Repository } from 'typeorm';
 
 @Injectable()

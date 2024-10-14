@@ -10,8 +10,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { ItemService } from './item.service';
-import { CreateItemDto } from './dto/create-item.dto';
-import { UpdateItemDto } from './dto/update-item.dto';
+import { CreateItemDto, UpdateItemDto } from './dto';
 import { ApiBadRequestResponse, ApiNotFoundResponse } from '@nestjs/swagger';
 
 @Controller('item')
