@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
 import { GameClass } from '../character.consts';
 
 @Entity({ name: 'descriptions' })

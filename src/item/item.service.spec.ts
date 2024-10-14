@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ItemService } from './item.service';
-import { In, Repository } from 'typeorm';
-import { Item } from './entities';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { In, Repository } from 'typeorm';
+
 import { CreateItemDto } from './dto';
+import { Item } from './entities';
+import { ItemService } from './item.service';
 
 describe('ItemService', () => {
   let service: ItemService;

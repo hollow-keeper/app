@@ -38,7 +38,7 @@ export class CharacterEquipPrinter {
       })),
     ];
   }
-  
+
   private getFirstColumn() {
     return [
       this.getLevelAndSoulsSector(),

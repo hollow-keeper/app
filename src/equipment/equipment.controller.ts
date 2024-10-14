@@ -7,10 +7,11 @@ import {
   ParseIntPipe,
   HttpStatus,
 } from '@nestjs/common';
-import { EquipmentService } from './equipment.service';
-import { UpdateEquipmentDto, UpdateHumanityDto, UpdateSoulsDto } from './dto';
 import { ApiBadRequestResponse, ApiParam } from '@nestjs/swagger';
+
+import { UpdateEquipmentDto, UpdateHumanityDto, UpdateSoulsDto } from './dto';
 import { Hand } from './equipment.consts';
+import { EquipmentService } from './equipment.service';
 
 @Controller('characters')
 export class EquipmentController {

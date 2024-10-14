@@ -1,8 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { UpdateEquipmentDto } from './dto';
-import { Equipment } from './entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
+import { UpdateEquipmentDto } from './dto';
+import { Equipment } from './entities';
 import { CharacterService } from '../character';
 import { Hand } from './equipment.consts';
 import { ItemService } from '../item';
@@ -51,7 +52,7 @@ export class EquipmentService {
 
     const itemDict = await this.itemService.findMany(itemIds);
 
-    for (let slot of itemSlots) {
+    for (const slot of itemSlots) {
       items[slot.replace('_id', '')] = itemDict[newEquipment[slot]] ?? null;
     }
 

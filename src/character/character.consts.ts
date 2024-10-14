@@ -1,5 +1,5 @@
-import { Equipment } from '../equipment';
 import { Characteristics } from './entities';
+import { Equipment } from '../equipment/entities';
 
 export enum GameClass {
   warrior = 'warrior',
@@ -35,21 +35,6 @@ const defaultEquipment = {
   right_weapon_primary: null,
   left_weapon_secondary: null,
   right_weapon_secondary: null,
-};
-
-const weapon = {
-  id: 1,
-  name: 'noj',
-  weight: 2,
-  balance: 3,
-  characteristics_bonus: {
-    strength: 1,
-    dexterity: 3,
-  },
-  properties_bonus: {
-    armor: 2,
-    balance: 4,
-  },
 };
 
 export const gameClasses: GameClasses = {

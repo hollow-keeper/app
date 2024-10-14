@@ -15,6 +15,8 @@ export class AddWarriorItems1728326214313 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DELETE FROM items WHERE name in ('Hard Leather Boots', 'Hard Leather Gauntlets', 'Hard Leather Armor', 'Standart Helm', 'Heater Shield', 'Longsword')`);
+    await queryRunner.query(
+      `DELETE FROM items WHERE name in ('Hard Leather Boots', 'Hard Leather Gauntlets', 'Hard Leather Armor', 'Standart Helm', 'Heater Shield', 'Longsword')`,
+    );
   }
 }

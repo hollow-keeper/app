@@ -1,13 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CharacterService } from './character.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Character } from './entities/character.entity';
+import { Repository } from 'typeorm';
+
 import { PropertiesCalculatorService } from '../properties-calculator';
 import { GameClass, gameClasses } from './character.consts';
+import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto';
-import { Repository } from 'typeorm';
 import { CharacterPrinterService } from '../character-printer';
 import { ItemService } from '../item';
+import { Character } from './entities/character.entity';
 
 describe('CharacterService', () => {
   let service: CharacterService;

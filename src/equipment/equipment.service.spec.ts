@@ -1,12 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EquipmentService } from './equipment.service';
-import { Repository } from 'typeorm';
-import { Equipment } from './entities';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { Equipment } from './entities';
+import { EquipmentService } from './equipment.service';
 import { Character, CharacterService } from '../character';
+import { CharacterPrinterService } from '../character-printer';
 import { ItemService, Item } from '../item';
 import { PropertiesCalculatorService } from '../properties-calculator';
-import { CharacterPrinterService } from '../character-printer';
 
 describe('EquipmentService', () => {
   let service: EquipmentService;

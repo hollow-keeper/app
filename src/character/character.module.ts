@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { CharacterService } from './character.service';
-import { CharacterController } from './character.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { CharacterController } from './character.controller';
+import { CharacterService } from './character.service';
 import { Character } from './entities';
-import { PropertiesCalculatorModule } from '../properties-calculator';
 import { CharacterPrinterModule } from '../character-printer';
 import { ItemModule } from '../item';
+import { PropertiesCalculatorModule } from '../properties-calculator';
 
 @Module({
   imports: [

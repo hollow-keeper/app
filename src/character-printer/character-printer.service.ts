@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
+
 import {
   CharacterStatsAdapter,
   CharacterStatsPrinter,
 } from './character-stats';
 import { Character } from '../character';
 import { IProperties } from '../properties-calculator';
-import { CharacterEquipAdapter, CharacterEquipPrinter } from './character-equip';
+import {
+  CharacterEquipAdapter,
+  CharacterEquipPrinter,
+} from './character-equip';
 
 @Injectable()
 export class CharacterPrinterService {
@@ -17,7 +21,7 @@ export class CharacterPrinterService {
     );
     const characterEquipAdapter = new CharacterEquipAdapter(character);
     const characterEquipPrinter = new CharacterEquipPrinter(
-        characterEquipAdapter,
+      characterEquipAdapter,
       length,
     );
     return characterStatsPrinter.print() + '\n' + characterEquipPrinter.print();
