@@ -112,6 +112,19 @@ describe('ItemService', () => {
     expect(result).toBeNull();
   });
 
+  it('should  throw exception while finding item by Nan id', async () => {
+    expect(() => service.findOne(NaN)).rejects.toThrow(
+      'Invalid id: id must be a positive integer',
+    );
+  });
+
+  it('should  throw exception while finding empty item', async () => {
+    mockRepository.findOneBy.mockReturnValue(undefined);
+    expect(() => service.findOne(1)).rejects.toThrow(
+      'Item with ID 1 not found',
+    );
+  });
+
   it('should find many items by ids', async () => {
     const item = {
       id: 1,

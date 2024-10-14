@@ -3,8 +3,8 @@ import {
   CharacterStatsAdapter,
   CharacterStatsPrinter,
 } from './character-stats';
-import { Character } from 'src/character/entities/character.entity';
-import { IProperties } from 'src/properties-calculator/properties-calculator.types';
+import { Character } from '../character';
+import { IProperties } from '../properties-calculator';
 import { CharacterEquipAdapter, CharacterEquipPrinter } from './character-equip';
 
 @Injectable()

@@ -1,5 +1,5 @@
-import { Equipment } from 'src/equipment/entities/equipment.entity';
-import { Characteristics } from './entities/characteristics.entity';
+import { Equipment } from '../equipment';
+import { Characteristics } from './entities';
 
 export enum GameClass {
   warrior = 'warrior',

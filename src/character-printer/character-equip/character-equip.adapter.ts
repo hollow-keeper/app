@@ -1,5 +1,5 @@
-import { Character } from 'src/character/entities/character.entity';
-import { IProperties } from 'src/properties-calculator/properties-calculator.types';
+import { Character } from '../../character';
+import { IProperties } from '../../properties-calculator';
 
 export class CharacterEquipAdapter {
   get level(): string {

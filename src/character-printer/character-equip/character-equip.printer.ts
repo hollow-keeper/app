@@ -1,4 +1,4 @@
-import { page, valueInContainer } from '../utils';
+import { page } from '../utils';
 import { CharacterEquipAdapter } from './character-equip.adapter';
 
 export class CharacterEquipPrinter {

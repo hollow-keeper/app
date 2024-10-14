@@ -4,16 +4,15 @@ import {
   BadRequestException,
   Logger,
 } from '@nestjs/common';
-import { CreateCharacterDto } from './dto/create-character.dto';
+import { CreateCharacterDto, UpdateCharacteristicsDto } from './dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Character } from './entities/character.entity';
+import { Character } from './entities';
 import { Repository } from 'typeorm';
-import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
 import { GameClass, gameClasses } from './character.consts';
-import { PropertiesCalculatorService } from '../properties-calculator/properties-calculator.service';
-import { CharacterPrinterService } from '../character-printer/character-printer.service';
-import { Equipment } from '../equipment/entities/equipment.entity';
-import { ItemService } from '../item/item.service';
+import { PropertiesCalculatorService } from '../properties-calculator';
+import { CharacterPrinterService } from '../character-printer';
+import { Equipment } from '../equipment';
+import { ItemService } from '../item';
 
 const calcTotalCharacteristics = (characteristics: UpdateCharacteristicsDto) =>
   Object.values(characteristics).reduce((acc, val) => (acc += val));

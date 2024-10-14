@@ -12,8 +12,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { CharacterService } from './character.service';
-import { CreateCharacterDto } from './dto/create-character.dto';
-import { UpdateCharacteristicsDto } from './dto/update-characteristics.dto';
+import { CreateCharacterDto, UpdateCharacteristicsDto } from './dto';
 import { GameClass } from './character.consts';
 import {
   ApiBadRequestResponse,

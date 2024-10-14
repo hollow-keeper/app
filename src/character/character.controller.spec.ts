@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CharacterController } from './character.controller';
 import { CharacterService } from './character.service';
-import { PropertiesCalculatorService } from '../properties-calculator/properties-calculator.service';
+import { PropertiesCalculatorService } from '../properties-calculator';
 import { Repository } from 'typeorm';
-import { Character } from './entities/character.entity';
+import { Character } from './entities';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CharacterPrinterService } from '../character-printer/character-printer.service';
-import { ItemService } from '../item/item.service';
+import { CharacterPrinterService } from '../character-printer';
+import { ItemService } from '../item';
 
 describe('CharacterController', () => {
   let controller: CharacterController;
