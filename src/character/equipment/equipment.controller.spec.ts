@@ -4,9 +4,10 @@ import { Repository } from 'typeorm';
 
 import { EquipmentController } from './equipment.controller';
 import { EquipmentService } from './equipment.service';
-import { Character, CharacterService } from '../character';
-import { CharacterPrinterService } from '../character-printer';
-import { ItemService, Item } from '../item';
+import { Character } from '../entities';
+import { CharacterService } from '../character.service';
+import { CharacterPrinterService } from '../../character-printer';
+import { ItemService, Item } from '../../item';
 import { Equipment } from './entities';
 import { PropertiesCalculatorService } from '../properties-calculator';
 

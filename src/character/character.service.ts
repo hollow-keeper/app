@@ -11,7 +11,7 @@ import { GameClass, gameClasses } from './character.consts';
 import { CreateCharacterDto, UpdateCharacteristicsDto } from './dto';
 import { Character } from './entities';
 import { CharacterPrinterService } from '../character-printer';
-import { Equipment } from '../equipment/entities';
+import { Equipment } from './equipment/entities';
 import { ItemService } from '../item';
 import { PropertiesCalculatorService } from './properties-calculator';
 //TODO: Fix circular deps with equip

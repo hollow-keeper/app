@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { Character, Characteristics } from '../entities';
-import { Equipment } from '../../equipment';
+import { Equipment } from '../equipment/entities';
 import { Item } from '../../item';
 
 const vitalityToHealthMap = [

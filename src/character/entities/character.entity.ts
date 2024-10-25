@@ -2,7 +2,7 @@ import { Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { Characteristics } from './characteristics.entity';
 import { Description } from './description.entity';
-import { Equipment } from '../../equipment/entities';
+import { Equipment } from '../equipment/entities';
 
 @Entity({ name: 'characters' })
 export class Character {

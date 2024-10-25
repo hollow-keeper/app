@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { CharacterModule } from './character';
-import { EquipmentModule } from './equipment';
+import { EquipmentModule } from './character/equipment';
 import { ItemModule } from './item';
 
 @Module({
