@@ -1,4 +1,4 @@
-import { Character, IProperties } from '../../character';
+import { Character, IProperties } from '../..';
 
 export type TDiceType = 'd4' | 'd6' | 'd8' | 'd10' | 'd12' | 'd20';
 

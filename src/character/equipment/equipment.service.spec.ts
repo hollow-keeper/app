@@ -6,7 +6,7 @@ import { Equipment } from './entities';
 import { EquipmentService } from './equipment.service';
 import { Character } from '../entities';
 import { CharacterService } from '../character.service';
-import { CharacterPrinterService } from '../../character-printer';
+import { CharacterPrinterService } from '../character-printer';
 import { ItemService, Item } from '../../item';
 import { PropertiesCalculatorService } from '../properties-calculator';
 

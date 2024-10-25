@@ -2,11 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { PropertiesCalculatorService } from '../properties-calculator';
+import { PropertiesCalculatorService } from './properties-calculator';
 import { GameClass, gameClasses } from './character.consts';
 import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto';
-import { CharacterPrinterService } from '../character-printer';
+import { CharacterPrinterService } from './character-printer';
 import { ItemService } from '../item';
 import { Character } from './entities/character.entity';
 

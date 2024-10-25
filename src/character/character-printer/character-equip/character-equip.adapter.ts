@@ -1,4 +1,4 @@
-import { Character, IProperties } from '../../character';
+import { Character, IProperties } from '../..';
 
 export class CharacterEquipAdapter {
   get level(): string {
