@@ -4,8 +4,7 @@ import {
   CharacterStatsAdapter,
   CharacterStatsPrinter,
 } from './character-stats';
-import { Character } from '../character';
-import { IProperties } from '../properties-calculator';
+import { Character, IProperties } from '..';
 import {
   CharacterEquipAdapter,
   CharacterEquipPrinter,

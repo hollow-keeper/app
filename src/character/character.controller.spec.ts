@@ -4,9 +4,9 @@ import { Repository } from 'typeorm';
 
 import { CharacterController } from './character.controller';
 import { CharacterService } from './character.service';
-import { PropertiesCalculatorService } from '../properties-calculator';
+import { PropertiesCalculatorService } from './properties-calculator';
 import { Character } from './entities';
-import { CharacterPrinterService } from '../character-printer';
+import { CharacterPrinterService } from './character-printer';
 import { ItemService } from '../item';
 
 describe('CharacterController', () => {

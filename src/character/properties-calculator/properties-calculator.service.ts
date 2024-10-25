@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
-import { Character, Characteristics } from '../character';
-import { Equipment } from '../equipment';
-import { Item } from '../item';
+import { Character, Characteristics } from '../entities';
+import { Equipment } from '../equipment/entities';
+import { Item } from '../../item';
 
 const vitalityToHealthMap = [
   0, 400, 415, 433, 451, 471, 490, 511, 530, 552, 573, 594, 616, 638, 658, 682,

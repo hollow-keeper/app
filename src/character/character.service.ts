@@ -10,10 +10,10 @@ import { Repository } from 'typeorm';
 import { GameClass, gameClasses } from './character.consts';
 import { CreateCharacterDto, UpdateCharacteristicsDto } from './dto';
 import { Character } from './entities';
-import { CharacterPrinterService } from '../character-printer';
-import { Equipment } from '../equipment/entities';
+import { CharacterPrinterService } from './character-printer';
+import { Equipment } from './equipment/entities';
 import { ItemService } from '../item';
-import { PropertiesCalculatorService } from '../properties-calculator';
+import { PropertiesCalculatorService } from './properties-calculator';
 //TODO: Fix circular deps with equip
 const calcTotalCharacteristics = (characteristics: UpdateCharacteristicsDto) =>
   Object.values(characteristics).reduce((acc, val) => (acc += val));

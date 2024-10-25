@@ -1,5 +1,4 @@
-import { Character } from '../../character';
-import { IProperties } from '../../properties-calculator';
+import { Character, IProperties } from '../..';
 
 export type TDiceType = 'd4' | 'd6' | 'd8' | 'd10' | 'd12' | 'd20';
 

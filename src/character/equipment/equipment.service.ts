@@ -4,9 +4,9 @@ import { Repository } from 'typeorm';
 
 import { UpdateEquipmentDto } from './dto';
 import { Equipment } from './entities';
-import { CharacterService } from '../character';
+import { CharacterService } from '../character.service';
 import { Hand } from './equipment.consts';
-import { ItemService } from '../item';
+import { ItemService } from '../../item';
 
 @Injectable()
 export class EquipmentService {
