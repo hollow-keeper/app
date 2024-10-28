@@ -1,2 +1,2 @@
-export * from './create-item.dto';
-export * from './update-item.dto';
+export * from './create-weapon.dto';
+export * from './update-weapon.dto';

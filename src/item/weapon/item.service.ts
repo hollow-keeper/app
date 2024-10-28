@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 
-import { CreateItemDto, UpdateItemDto } from './dto';
+import { CreateWeaponDto, UpdateWeaponDto } from './dto';
 import { Item } from './entities';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class ItemService {
     private repository: Repository<Item>,
   ) {}
 
-  create(createItemDto: CreateItemDto) {
+  create(createItemDto: CreateWeaponDto) {
     this.logger.log('create() has been invoked');
 
     const item = this.repository.create(createItemDto);
@@ -82,7 +82,7 @@ export class ItemService {
     return itemMap;
   }
 
-  async update(id: number, updateItemDto: UpdateItemDto) {
+  async update(id: number, updateItemDto: UpdateWeaponDto) {
     this.logger.log(`update() has been invoked with ID ${id}`);
 
     const item = await this.findOne(id);
