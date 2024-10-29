@@ -8,22 +8,22 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 
 import { CreateWeaponDto, UpdateWeaponDto } from './dto';
-import { Item } from './entities';
+import { Weapon } from '../entities';
 
 @Injectable()
-export class ItemService {
-  logger = new Logger(ItemService.name);
+export class WeaponService {
+  logger = new Logger(WeaponService.name);
 
   constructor(
-    @InjectRepository(Item)
-    private repository: Repository<Item>,
+    @InjectRepository(Weapon)
+    private repository: Repository<Weapon>,
   ) {}
 
-  create(createItemDto: CreateWeaponDto) {
+  create(createWeaponDto: CreateWeaponDto) {
     this.logger.log('create() has been invoked');
 
-    const item = this.repository.create(createItemDto);
-    return this.repository.save(item);
+    const weapon = this.repository.create(createWeaponDto);
+    return this.repository.save(weapon);
   }
 
   findAll() {
@@ -57,39 +57,39 @@ export class ItemService {
       );
     }
 
-    const item = await this.repository.findOne({ where: { id } });
+    const weapon = await this.repository.findOne({ where: { id } });
 
-    if (!item) {
-      throw new NotFoundException(`Item with ID ${id} not found`);
+    if (!weapon) {
+      throw new NotFoundException(`Weapon with ID ${id} not found`);
     }
 
-    return item;
+    return weapon;
   }
 
   async findMany(ids: number[]) {
-    const itemsList = await this.repository.find({ where: { id: In(ids) } });
+    const weaponsList = await this.repository.find({ where: { id: In(ids) } });
 
-    const itemMap = itemsList.reduce((acc, item) => {
-      acc[item.id] = item;
+    const weaponMap = weaponsList.reduce((acc, weapon) => {
+      acc[weapon.id] = weapon;
       return acc;
     }, {});
     for (const id of ids) {
-      if (!itemMap[id]) {
-        throw new NotFoundException(`Item with ID ${id} not found`);
+      if (!weaponMap[id]) {
+        throw new NotFoundException(`Weapon with ID ${id} not found`);
       }
     }
 
-    return itemMap;
+    return weaponMap;
   }
 
-  async update(id: number, updateItemDto: UpdateWeaponDto) {
+  async update(id: number, updateWeaponDto: UpdateWeaponDto) {
     this.logger.log(`update() has been invoked with ID ${id}`);
 
-    const item = await this.findOne(id);
+    const weapon = await this.findOne(id);
 
-    const newItem = { ...item, ...updateItemDto };
+    const newWeapon = { ...weapon, ...updateWeaponDto };
 
-    return this.repository.save(newItem);
+    return this.repository.save(newWeapon);
   }
 
   remove(id: number) {
