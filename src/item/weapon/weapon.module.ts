@@ -1,15 +1,22 @@
 import { Module } from '@nestjs/common';
+/*
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { Item } from './entities';
-import { ItemController } from './item.controller';
+*/
+import { WeaponController } from './weapon.controller';
+/*
 import { ItemService } from './item.service';
-import { WeaponModule } from './weapon/weapon.module';
+*/
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Item]), WeaponModule],
-  controllers: [ItemController],
+  /*
+  imports: [TypeOrmModule.forFeature([Item])],
+  */
+  controllers: [WeaponController],
+  /*
   providers: [ItemService],
   exports: [ItemService],
+*/
 })
-export class ItemModule {}
+export class WeaponModule {}

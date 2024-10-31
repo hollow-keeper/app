@@ -28,7 +28,7 @@ export class Item {
   properties_bonus?: Record<string, number>;
 }
 
-enum EDamageType {
+export enum EDamageType {
   slash = 'slash',
   crush = 'crush',
   pierce = 'pierce',
