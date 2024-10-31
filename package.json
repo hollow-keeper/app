@@ -84,7 +84,9 @@
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
       "/migrations/",
-      ".module.ts"
+      ".module.ts",
+      ".entity.ts",
+      "index.ts"
     ]
   }
 }
