@@ -12,20 +12,20 @@ import {
 import { ApiBadRequestResponse, ApiNotFoundResponse } from '@nestjs/swagger';
 
 import { CreateWeaponDto, UpdateWeaponDto } from './dto';
-//import { ItemService } from './item.service';
+import { WeaponService } from './weapon.service';
 
 @Controller('weapon')
 export class WeaponController {
-  constructor(/*private readonly itemService: ItemService*/) {}
+  constructor(private readonly weaponService: WeaponService) {}
 
   @Post()
   create(@Body() createWeaponDto: CreateWeaponDto) {
-    //return this.itemService.create(createItemDto);
+    return this.weaponService.create(createWeaponDto);
   }
 
   @Get()
   findAll() {
-    //return this.itemService.findAll();
+    return this.weaponService.findAll();
   }
 
   @Get(':id')
@@ -40,7 +40,7 @@ export class WeaponController {
     )
     id: number,
   ) {
-    //return this.itemService.findOne(id);
+    return this.weaponService.findOne(id);
   }
 
   @Patch(':id')
@@ -50,9 +50,9 @@ export class WeaponController {
       new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
     )
     id: number,
-    @Body() updateItemDto: UpdateWeaponDto,
+    @Body() updateWeaponDto: UpdateWeaponDto,
   ) {
-    //return this.itemService.update(id, updateItemDto);
+    return this.weaponService.update(id, updateWeaponDto);
   }
 
   @Delete(':id')
@@ -63,6 +63,6 @@ export class WeaponController {
     )
     id: number,
   ) {
-    //return this.itemService.remove(id);
+    return this.weaponService.remove(id);
   }
 }
