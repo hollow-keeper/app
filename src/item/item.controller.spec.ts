@@ -17,6 +17,7 @@ describe('ItemController', () => {
       create: jest.fn(),
       find: jest.fn(),
       findOne: jest.fn(),
+      delete: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -79,6 +80,41 @@ describe('ItemController', () => {
 
     const result = await controller.findOne(1);
     expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
+    expect(result).toEqual(item);
+  });
+
+  it('should update item by id', async () => {
+    const item = {
+      name: 'Test Item',
+      weight: 1,
+      balance: 2,
+    };
+
+    mockRepository.findOne.mockReturnValue(item);
+    mockRepository.save.mockReturnValue({ ...item, name: 'wrong' });
+
+    const result = await controller.update(1, {
+      name: 'tttest',
+    });
+    expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
+    expect(mockRepository.save).toHaveBeenCalledWith({
+      ...item,
+      name: 'tttest',
+    });
+    expect(result).toEqual({ ...item, name: 'wrong' });
+  });
+
+  it('should remove item by id', async () => {
+    const item = {
+      name: 'Test Item',
+      weight: 1,
+      balance: 2,
+    };
+
+    mockRepository.delete.mockReturnValue(item);
+
+    const result = await controller.remove(1);
+    expect(mockRepository.delete).toHaveBeenCalledWith({ id: 1 });
     expect(result).toEqual(item);
   });
 });

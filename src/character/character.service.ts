@@ -7,12 +7,12 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { CharacterPrinterService } from './character-printer';
 import { GameClass, gameClasses } from './character.consts';
 import { CreateCharacterDto, UpdateCharacteristicsDto } from './dto';
 import { Character } from './entities';
-import { CharacterPrinterService } from './character-printer';
-import { Equipment } from './equipment/entities';
 import { ItemService } from '../item';
+import { Equipment } from './equipment/entities';
 import { PropertiesCalculatorService } from './properties-calculator';
 //TODO: Fix circular deps with equip
 const calcTotalCharacteristics = (characteristics: UpdateCharacteristicsDto) =>

@@ -2,11 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { CharacterPrinterService } from './character-printer';
 import { CharacterController } from './character.controller';
 import { CharacterService } from './character.service';
-import { PropertiesCalculatorService } from './properties-calculator';
 import { Character } from './entities';
-import { CharacterPrinterService } from './character-printer';
+import { PropertiesCalculatorService } from './properties-calculator';
 import { ItemService } from '../item';
 
 describe('CharacterController', () => {
