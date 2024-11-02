@@ -17,6 +17,7 @@ describe('WeaponController', () => {
       create: jest.fn(),
       find: jest.fn(),
       findOne: jest.fn(),
+      delete: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -81,6 +82,41 @@ describe('WeaponController', () => {
 
     const result = await controller.findOne(1);
     expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
+    expect(result).toEqual(weapon);
+  });
+
+  it('should update weapon by id', async () => {
+    const weapon = {
+      name: 'Test Weapon',
+      weight: 1,
+      balance: 2,
+    };
+
+    mockRepository.findOne.mockReturnValue(weapon);
+    mockRepository.save.mockReturnValue({ ...weapon, name: 'wrong' });
+
+    const result = await controller.update(1, {
+      name: 'tttest',
+    });
+    expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
+    expect(mockRepository.save).toHaveBeenCalledWith({
+      ...weapon,
+      name: 'tttest',
+    });
+    expect(result).toEqual({ ...weapon, name: 'wrong' });
+  });
+
+  it('should remove weapon by id', async () => {
+    const weapon = {
+      name: 'Test Weapon',
+      weight: 1,
+      balance: 2,
+    };
+
+    mockRepository.delete.mockReturnValue(weapon);
+
+    const result = await controller.remove(1);
+    expect(mockRepository.delete).toHaveBeenCalledWith({ id: 1 });
     expect(result).toEqual(weapon);
   });
 });
