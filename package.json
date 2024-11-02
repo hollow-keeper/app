@@ -86,6 +86,8 @@
       "/migrations/",
       ".module.ts",
       ".entity.ts",
+      ".dto.ts",
+      ".consts.ts",
       "index.ts"
     ]
   }
