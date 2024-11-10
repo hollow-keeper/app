@@ -75,10 +75,6 @@ export class CharacterService {
   async findOne(id: number) {
     this.logger.log(`findOne() has been invoked with ID ${id}`);
 
-    if (!this.repository) {
-      throw new Error('Repository is not initialized');
-    }
-
     const character = await this.repository.findOne({
       where: { id },
       relations: {
@@ -155,13 +151,14 @@ export class CharacterService {
 
     for (let i = 0; i < nextSkillPoints - prevSkillPoints; i++) {
       const currentLevel = level + i;
-      soulsToSubtract += this.propertiesCalculator.requiredSouls(currentLevel);
+      const sbs = await this.propertiesCalculator.requiredSouls(currentLevel);
+      soulsToSubtract += sbs;
     }
 
     // could be a problem if somehow we decrease some
     // cahracteristic and increase another,
     // but it seems impossible right now
-    if (prevSkillPoints === nextSkillPoints || soulsToSubtract === 0) {
+    if (prevSkillPoints === nextSkillPoints) {
       return character;
     }
 

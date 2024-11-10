@@ -333,7 +333,7 @@ export class PropertiesCalculatorService {
     const levelsArr = [0, 637, 690, 707, 724, 741, 758, 775, 793, 811, 829];
 
     if (level < 11) {
-      return levelsArr[level];
+      return levelsArr[level - 1];
     }
 
     return Math.floor(

@@ -123,7 +123,7 @@ describe('PropertiesCalculatorService', () => {
       dodgeChance: 13,
       rollCost: 8,
       rollTime: 1,
-      requiredSouls: 724,
+      requiredSouls: 707,
       loaded: 2,
     });
   });

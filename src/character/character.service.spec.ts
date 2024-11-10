@@ -27,6 +27,7 @@ describe('CharacterService', () => {
       save: jest.fn(),
       find: jest.fn(),
       findOne: jest.fn(),
+      delete: jest.fn(),
     };
 
     mockPropertiesCalculator = {
@@ -36,6 +37,10 @@ describe('CharacterService', () => {
 
     mockItemService = {
       findByName: jest.fn(),
+    };
+
+    mockCharacterPrinterService = {
+      print: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -90,8 +95,8 @@ describe('CharacterService', () => {
     };
 
     const createdCharacter = { id: 1, ...expectedCharacterData };
-    mockRepository.create.mockReturnValue(createdCharacter);
-    mockRepository.save.mockResolvedValue(createdCharacter);
+    mockRepository.create.mockReturnValueOnce(createdCharacter);
+    mockRepository.save.mockResolvedValueOnce(createdCharacter);
 
     const result = await service.create(gameClass, createCharacterDto);
 
@@ -154,8 +159,8 @@ describe('CharacterService', () => {
 
     const mockProperties = { health: 100, stamina: 100 };
 
-    mockRepository.findOne.mockResolvedValue(mockCharacter);
-    mockPropertiesCalculator.calculate.mockReturnValue(mockProperties);
+    mockRepository.findOne.mockResolvedValueOnce(mockCharacter);
+    mockPropertiesCalculator.calculate.mockReturnValueOnce(mockProperties);
 
     const result = await service.findOne(1);
 
@@ -184,13 +189,19 @@ describe('CharacterService', () => {
     expect(result).toEqual({ ...mockCharacter, properties: mockProperties });
   });
 
+  it('should throw exception if didnt found character', async () => {
+    await expect(service.findOne(1)).rejects.toThrow(
+      'Character with ID 1 not found',
+    );
+  });
+
   it('should correctly convert souls to levels', async () => {
     const mockCharacter = {
       equipment: { souls: 3300 },
       characteristics: { level: 10 },
     };
 
-    mockRepository.findOne.mockResolvedValue(mockCharacter);
+    mockRepository.findOne.mockResolvedValueOnce(mockCharacter);
     mockPropertiesCalculator.requiredSouls
       .mockReturnValueOnce(1000)
       .mockReturnValueOnce(1100)
@@ -209,9 +220,138 @@ describe('CharacterService', () => {
     };
 
     mockPropertiesCalculator.requiredSouls.mockReturnValueOnce(1000);
-    mockRepository.findOne.mockResolvedValue(character);
+    mockRepository.findOne.mockResolvedValueOnce(character);
 
     const result = await service.getAvailableLevels(1);
     expect(result).toBe(0);
+  });
+
+  it('should levelup character', async () => {
+    const character = {
+      equipment: { souls: 1000 },
+      characteristics: { level: 10, attunement: 7 },
+    };
+    mockRepository.findOne.mockResolvedValueOnce(character);
+    mockRepository.save.mockResolvedValueOnce(character);
+    const result = await service.levelup(1, {
+      attunement: 8,
+    });
+
+    expect(mockRepository.save).toHaveBeenCalledWith({
+      ...character,
+      characteristics: {
+        ...character.characteristics,
+        attunement: 8,
+        level: 11,
+      },
+    });
+    expect(result).toEqual(character);
+  });
+
+  it('should not levelup character', async () => {
+    const character = {
+      equipment: { souls: 1000 },
+      characteristics: { level: 10, attunement: 7 },
+    };
+    mockRepository.findOne.mockResolvedValueOnce(character);
+    mockRepository.save.mockResolvedValueOnce(character);
+    const result = await service.levelup(1, {
+      attunement: 7,
+    });
+
+    expect(mockRepository.save).toHaveBeenCalledTimes(0);
+    expect(result).toEqual(character);
+  });
+
+  it('should throw error because of souls', async () => {
+    const character = {
+      equipment: { souls: 0 },
+      characteristics: { level: 10, attunement: 7 },
+    };
+    mockPropertiesCalculator.requiredSouls.mockResolvedValueOnce(20000);
+    mockRepository.findOne.mockResolvedValueOnce(character);
+    mockRepository.save.mockResolvedValueOnce(character);
+     await expect(service.levelup(1, {
+      attunement: 8,
+    })).rejects.toThrow(`Not enough souls, current: 0, needed: 20000`);
+  });
+
+  it('should delete character', async () => {
+    await service.remove(1);
+
+    expect(mockRepository.delete).toHaveBeenCalledWith({
+      id: 1,
+    });
+  });
+
+  it('should print character', async () => {
+    mockRepository.findOne.mockResolvedValueOnce({
+      characteristics: {
+        attunement: 1,
+        charisma: 2,
+        dexterity: 3,
+        endurance: 4,
+        faith: 102,
+        id: 6,
+        intelligence: 7,
+        level: 8,
+        perception: 62,
+        resistance: 10,
+        strength: 11,
+        vitality: 82,
+      },
+      description: {
+        game_class: GameClass.bandit,
+        id: 13,
+        name: 'test1',
+        origin: 'test2',
+      },
+      equipment: {
+        humanity: 14,
+        id: 15,
+        souls: 16,
+      },
+      id: 17,
+      properties: {
+        attentiveness: 18,
+        balance: 19,
+        balanceRecoveryRate: 20,
+        bleedingResistance: 21,
+        carryingCapacity: 22,
+        crushProtection: 23,
+        curseResistance: 24,
+        dodgeChance: 25,
+        eloquence: 26,
+        flameProtection: 27,
+        flashProtection: 28,
+        health: 29,
+        loaded: 30,
+        luck: 31,
+        magicalProtection: 32,
+        physicalProtection: 33,
+        pierceProtection: 34,
+        poisonResistance: 35,
+        requiredSouls: 36,
+        rollCost: 37,
+        rollLength: 38,
+        rollTime: 39,
+        runCost: 40,
+        runLength: 41,
+        slashProtection: 42,
+        spellSlots: 43,
+        stamina: 44,
+        staminaRecoveryRate: 45,
+        stepLength: 46,
+        threat: 47,
+        unarmoredFlameProtection: 48,
+        unarmoredFlashProtection: 49,
+        unarmoredMagicalProtection: 50,
+        unarmoredPhysicalProtection: 51,
+      },
+    });
+    mockCharacterPrinterService.print.mockResolvedValueOnce('print');
+    const result = await service.printCharacterSheet(1, 70);
+
+    expect(result).toEqual('print');
   });
 });
