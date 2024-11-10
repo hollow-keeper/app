@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
+import { Item } from '../../item';
 import { Character, Characteristics } from '../entities';
 import { Equipment } from '../equipment/entities';
-import { Item } from '../../item';
 
 const vitalityToHealthMap = [
   0, 400, 415, 433, 451, 471, 490, 511, 530, 552, 573, 594, 616, 638, 658, 682,
@@ -333,7 +333,7 @@ export class PropertiesCalculatorService {
     const levelsArr = [0, 637, 690, 707, 724, 741, 758, 775, 793, 811, 829];
 
     if (level < 11) {
-      return levelsArr[level];
+      return levelsArr[level - 1];
     }
 
     return Math.floor(

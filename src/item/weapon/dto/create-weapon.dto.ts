@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsObject, IsString } from 'class-validator';
+
 import { EDamageType } from '../../entities';
 
 export class CreateWeaponDto {
@@ -31,7 +32,6 @@ export class CreateWeaponDto {
   @IsObject()
   properties_bonus?: Record<string, number>;
 
-  
   @ApiProperty()
   @IsNumber()
   damage: number;

@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 
-import {
-  CharacterStatsAdapter,
-  CharacterStatsPrinter,
-} from './character-stats';
 import { Character, IProperties } from '..';
 import {
   CharacterEquipAdapter,
   CharacterEquipPrinter,
 } from './character-equip';
+import {
+  CharacterStatsAdapter,
+  CharacterStatsPrinter,
+} from './character-stats';
 
 @Injectable()
 export class CharacterPrinterService {
