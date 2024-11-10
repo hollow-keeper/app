@@ -88,7 +88,9 @@
       ".entity.ts",
       ".dto.ts",
       ".consts.ts",
-      "index.ts"
+      "index.ts",
+      "main.ts",
+      "datasource.ts"
     ]
   }
 }
